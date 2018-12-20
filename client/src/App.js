@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import { connect } from 'react-redux';
+import {
+  BrowserRouter as Router,
+  Route
+} from 'react-router-dom';
 import './App.css';
 
 class App extends Component {
@@ -9,7 +14,7 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
-            Edit <code>src/App.js</code> and save to reload.
+            Cynthia
           </p>
           <a
             className="App-link"
@@ -17,7 +22,6 @@ class App extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Learn React
           </a>
         </header>
       </div>
