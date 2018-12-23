@@ -5,6 +5,7 @@ ruby '2.4.2'
 
 gem 'foreman', '~> 0.82.0'
 
+gem 'pry'
 gem 'responders'
 gem 'react-rails'
 gem 'thor'

@@ -4,4 +4,4 @@
 # Examples:
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-  Article.create(title: 'aqwqwqe', url: "dfsdq.com", description: "vsfwd", author: "dsawq")
+  Weight.create(pounds: 120);
