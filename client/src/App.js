@@ -5,20 +5,30 @@ import {
   BrowserRouter as Router,
   Route
 } from 'react-router-dom';
+import DisplayWeights from './containers/DisplayWeights.js'
 import NewWeight from './containers/NewWeight.js'
+import { fetchWeights } from './actions/fetchWeightsAction.js'
+import Chart from './components/Chart.jsx';
 import './App.css';
 
 class App extends Component {
+
+  componentDidMount() {
+   this.props.fetchWeights()
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
           <h1>Welcome to Weight Tracker</h1>
+          <DisplayWeights />
           <NewWeight />
+          <Chart />
         </header>
       </div>
     );
   }
 }
 
-export default App;
+export default connect(null, {fetchWeights})(App);
