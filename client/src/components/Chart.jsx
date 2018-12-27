@@ -4,18 +4,15 @@ import {Bar, Line, Pie} from 'react-chartjs-2';
 class Chart extends React.Component {
 
   constructor(props) {
+    debugger
     super(props);
     this.state = {
       chartData:{
-        labels: ['9/20/18', '9/31/18', '10/5/18'],
+        labels: props.dates,
         datasets:[
           {
             label: 'Weight',
-            data:[
-              1,
-              177,
-              120
-            ],
+            data: props.pounds,
             backgroundColor:[
               'rgba(54, 162, 235, 0.6)',
               'rgba(255, 206, 86, 0.6)',

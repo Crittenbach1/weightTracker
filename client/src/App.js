@@ -5,15 +5,15 @@ import {
   BrowserRouter as Router,
   Route
 } from 'react-router-dom';
+import { fetchWeights } from './actions/fetchWeightsAction.js'
 import DisplayWeights from './containers/DisplayWeights.js'
 import NewWeight from './containers/NewWeight.js'
-import { fetchWeights } from './actions/fetchWeightsAction.js'
 import Chart from './components/Chart.jsx';
 import './App.css';
 
 class App extends Component {
 
-  componentDidMount() {
+  componentWillMount() {
    this.props.fetchWeights()
   }
 
@@ -22,13 +22,16 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <h1>Welcome to Weight Tracker</h1>
-          <DisplayWeights />
+          <DisplayWeights weights={this.props.weights} />
           <NewWeight />
-          <Chart />
         </header>
       </div>
     );
   }
 }
 
-export default connect(null, {fetchWeights})(App);
+const mapStateToProps = (state) => {
+  return {weights: state.fetchWeights}
+}
+
+export default connect(mapStateToProps, {fetchWeights})(App);
