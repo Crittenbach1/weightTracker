@@ -11,7 +11,6 @@ export function fetchWeights() {
       return response.json()
     })
      .then(function(weights) {
-       debugger
         dispatch({type: 'FETCH_WEIGHTS', payload: weights})
     })
   }

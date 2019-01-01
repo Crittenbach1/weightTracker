@@ -17,7 +17,9 @@ class App extends Component {
    this.props.fetchWeights()
   }
 
+
   render() {
+    debugger
     return (
       <div className="App">
         <header className="App-header">
@@ -31,7 +33,8 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {weights: state.fetchWeights}
+    debugger
+    return {weights: state.fetchWeights}
 }
 
 export default connect(mapStateToProps, {fetchWeights})(App);

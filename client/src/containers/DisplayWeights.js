@@ -12,26 +12,23 @@ class displayWeights extends Component {
    this.state = {weights: this.props.weights};
   }
 
-
  render() {
-   debugger
-
   let chart;
     if(this.props.weights.length > 0) {
         var pounds = this.props.weights.map(w => parseInt(w.pounds));
         var dates = this.props.weights.map(w => w.id + "/2018");
+        alert("Hello");
         chart = <Chart dates={dates} pounds={pounds} />
     } else {
         chart = null
     }
     return (
-        <div>
+        <div className="chart" style={{height: 200 + "px", width: 100 + "%"}}>
             {chart}
         </div>
     )
  }
 }
-
 
 
 export default displayWeights;

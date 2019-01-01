@@ -42,8 +42,4 @@ class newWeight extends Component {
  }
 }
 
-const mapStateToProps = (state) => {
-  return {weight: state.weight}
-}
-
-export default connect(mapStateToProps, {saveWeight})(newWeight);
+export default connect(null, {saveWeight})(newWeight);

@@ -1,12 +1,15 @@
-import React from 'react';
-
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {Bar, Line, Pie} from 'react-chartjs-2';
-class Chart extends React.Component {
+
+class Chart extends Component {
 
   constructor(props) {
-    debugger
     super(props);
+    debugger
     this.state = {
+      loading:true,
+      newData:[],
       chartData:{
         labels: props.dates,
         datasets:[
@@ -23,7 +26,6 @@ class Chart extends React.Component {
     }
 
   }
-
 
 
   render() {
@@ -45,4 +47,8 @@ class Chart extends React.Component {
 
 }
 
-export default Chart;
+const mapStateToProps = (state) => {
+    debugger
+}
+
+export default connect(mapStateToProps, {})(Chart);
