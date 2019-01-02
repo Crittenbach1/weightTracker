@@ -6,19 +6,32 @@ import {
   Route
 } from 'react-router-dom';
 import NewWeight from './containers/NewWeight.js'
+import { fetchWeights } from './actions/fetchWeightsAction.js'
 import './App.css';
 
+var CanvasJSReact = require('./canvasjs.react');
+var CanvasJS = CanvasJSReact.CanvasJS;
+var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
 class App extends Component {
+
+ componentDidMount() {
+   this.props.fetchWeights();
+ }
+
   render() {
+
     return (
       <div className="App">
         <header className="App-header">
           <h1>Welcome to Weight Tracker</h1>
           <NewWeight />
         </header>
+      
       </div>
     );
   }
 }
 
-export default App;
+
+export default connect(null, {fetchWeights})(App);
