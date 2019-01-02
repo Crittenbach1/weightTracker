@@ -1,12 +1,16 @@
-export default (state = [], action) => {
+/*export default (state = [], action) => {
   switch (action.type) {
     case 'FETCH_WEIGHTS':
       return action.payload
     case 'SAVE_WEIGHT':
-       let weight = state.map(w => w);
-       weight.push(action.payload)
-       return weight;
+<<<<<<< HEAD:client/src/reducers/saveWeightReducer.js
+     debugger
+=======
+      debugger
+>>>>>>> temp-branch:client/src/reducers/fetchWeightsReducer.js
+      return action.payload
     default:
       return state;
   }
 }
+*/

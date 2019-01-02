@@ -1,45 +1,47 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { saveWeight } from '../actions/saveWeightAction.js'
+import Chart from '../components/Chart.jsx';
 
-import '../App.css';
-
-class newWeight extends Component {
-
+export default class NewWeight extends Component {
   constructor(props) {
-   super(props);
-   this.state = {pounds: ''};
+    super(props);
 
-   this.handleChange = this.handleChange.bind(this);
-   this.handleSubmit = this.handleSubmit.bind(this);
- }
+    this.state = {
+      userInput: '',
+      allWeights: [],
+    }
+  }
 
- handleChange(event) {
-   this.setState({pounds: event.target.value});
- }
+  changeUserInput(input){
+      this.setState({
+        userInput: input
+      });
+   }
 
- handleSubmit(event) {
-   alert('A name was submitted: ' + this.state.pounds);
-   var weight = {pounds: this.state.pounds};
-   this.props.saveWeight(weight);
+  addToWeights(input){
+    let weightsArray = this.state.allWeights;
 
-   event.preventDefault();
- }
+    weightsArray.push({x: this.state.allWeights.length, y: parseInt(input)});
+
+    this.setState({
+      allWeights: weightsArray,
+    })
+  }
 
 
- render() {
-  return (
-    <div>
-      <p>Enter Current Weight:</p>
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          <input value={this.state.value} onChange={this.handleChange} />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-    </div>
-  );
- }
+
+  render() {
+
+    return (
+      <div style={{height: 200 + "px", width: 100 + "%"}}>
+        <input
+         onChange={ (e)=>this.changeUserInput(e.target.value) }
+           value={this.state.userInput}
+           type="text"
+         />
+         <button onClick={ ()=> this.addToWeights(this.state.userInput) }>Submit</button>
+         <Chart info={this.state.allWeights} />
+
+      </div>
+    )
+  }
 }
-
-export default connect(null, {saveWeight})(newWeight);

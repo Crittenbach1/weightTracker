@@ -1,54 +1,64 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import {Bar, Line, Pie} from 'react-chartjs-2';
+
+import {Line} from 'react-chartjs-2';
+
+var CanvasJSReact = require('../canvasjs.react');
+var CanvasJS = CanvasJSReact.CanvasJS;
+var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 class Chart extends Component {
 
+  componentWillReceiveProps(nextProps) {
+    debugger
+    this.setState({ data: nextProps.info });
+  }
   constructor(props) {
     super(props);
-    debugger
     this.state = {
-      loading:true,
-      newData:[],
-      chartData:{
-        labels: props.dates,
-        datasets:[
-          {
-            label: 'Weight',
-            data: props.pounds,
-            backgroundColor:[
-              'rgba(54, 162, 235, 0.6)',
-              'rgba(255, 206, 86, 0.6)',
-            ]
-          }
-        ]
-      }
+      data: []
     }
 
   }
 
 
   render() {
+
+    const options = {
+			animationEnabled: true,
+			exportEnabled: true,
+			theme: "light2", // "light1", "dark1", "dark2"
+			title:{
+				text: "Weights"
+			},
+			axisY: {
+				title: "Weight",
+				includeZero: false,
+				suffix: "lb"
+			},
+			axisX: {
+				title: "Date",
+				prefix: "",
+				interval: 2
+			},
+			data: [{
+				type: "line",
+				toolTipContent: "{x}/2018: {y}lb",
+				dataPoints: this.state.data,
+			}]
+		}
+
     return (
       <div className="chart" style={{height: 200 + "px", width: 100 + "%"}}>
-         CHART COMPONENT
-
-         <Line
-          	data={this.state.chartData}
-          	width={100}
-          	height={50}
-          	options={{
-          		maintainAspectRatio: false
-          	}}
+        <CanvasJSChart options = {options}
+          /* onRef={ref => this.chart = ref} */
         />
+        <ul>
+         {this.state.data.map(val=> <li>{val.x}</li>)}
+        </ul>
       </div>
     );
   }
 
 }
 
-const mapStateToProps = (state) => {
-    debugger
-}
-
-export default connect(mapStateToProps, {})(Chart);
+export default Chart;
