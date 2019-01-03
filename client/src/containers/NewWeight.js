@@ -22,7 +22,7 @@ class NewWeight extends Component {
   addToWeights(input){
     this.props.saveWeight({pounds: input});
 
-    let newWeight = {x: 12, y: parseInt(input)};
+    let newWeight = {x: 1104517800000, y: parseInt(input)};
 
     this.setState({
       newWeight: [newWeight],

@@ -11,7 +11,7 @@ class Chart extends Component {
     if ( nextProps.weightData.length > 0 ) {
       var chartWeights = [];
       for(let i = 0; i < nextProps.weightData.length; i++) {
-         let w = {x: nextProps.weightData[i].id, y: parseInt(nextProps.weightData[i].pounds)};
+         let w = {x: 1088620200000, y: parseInt(nextProps.weightData[i].pounds)};
          chartWeights.push(w);
       }
       this.setState({ data: chartWeights });
@@ -51,6 +51,7 @@ class Chart extends Component {
 			},
 			data: [{
 				type: "line",
+        xValueType: "dateTime",
 				toolTipContent: "{x}/2018: {y}lb",
 				dataPoints: this.state.data,
 			}]
