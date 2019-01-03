@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import {connect} from "react-redux";
 
-import {Line} from 'react-chartjs-2';
 
 var CanvasJSReact = require('../canvasjs.react');
 var CanvasJS = CanvasJSReact.CanvasJS;
@@ -10,7 +10,18 @@ class Chart extends Component {
 
   componentWillReceiveProps(nextProps) {
     debugger
-    this.setState({ data: nextProps.info });
+    if ( nextProps.weightData.length > 0 ) {
+      let chartWeights = [];
+      for(let i = 0; i < nextProps.weightData.length; i++) {
+         let w = {x: nextProps.weightData[i].id, y: parseInt(nextProps.weightData[i].pounds)};
+         chartWeights.push(w);
+      }
+      this.setState({ data: chartWeights });
+    }
+
+    if ( nextProps.info > 0 ) {
+      this.setState({ data: nextProps.info });
+    }
   }
   constructor(props) {
     super(props);
@@ -61,4 +72,11 @@ class Chart extends Component {
 
 }
 
-export default Chart;
+function mapStateToProps(state) {
+  debugger
+   return {
+    weightData: state.fetchWeights
+   }
+}
+
+export default connect(mapStateToProps)(Chart);
