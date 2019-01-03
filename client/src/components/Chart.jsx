@@ -8,19 +8,13 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 class Chart extends Component {
 
   componentWillReceiveProps(nextProps) {
-    if ( nextProps.weightData.length > 0 ) {
-      var chartWeights = [];
-      for(let i = 0; i < nextProps.weightData.length; i++) {
-         let w = {x: 1088620200000, y: parseInt(nextProps.weightData[i].pounds)};
-         chartWeights.push(w);
-      }
-      this.setState({ data: chartWeights });
-    }
-
-    if ( nextProps.info.length > 0 ) {
+    if ( nextProps.info.length == 0 ) {
+      this.setState({ data: nextProps.weightData });
+    } else {
       this.setState({ data: [...this.state.data, ...nextProps.info] });
     }
   }
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -28,7 +22,6 @@ class Chart extends Component {
     }
 
   }
-
 
   render() {
 
@@ -52,7 +45,7 @@ class Chart extends Component {
 			data: [{
 				type: "line",
         xValueType: "dateTime",
-				toolTipContent: "{x}/2018: {y}lb",
+				toolTipContent: "{x}: {y}lb",
 				dataPoints: this.state.data,
 			}]
 		}

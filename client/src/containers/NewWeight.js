@@ -20,9 +20,11 @@ class NewWeight extends Component {
    }
 
   addToWeights(input){
-    this.props.saveWeight({pounds: input});
+    debugger
+    var currentDate = Math.round((new Date()).getTime() / 1000) * 1000;
+    this.props.saveWeight({ pounds: input, currentDate: currentDate.toString() });
 
-    let newWeight = {x: 1104517800000, y: parseInt(input)};
+    let newWeight = {x: currentDate, y: parseInt(input)};
 
     this.setState({
       newWeight: [newWeight],

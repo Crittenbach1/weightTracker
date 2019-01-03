@@ -10,6 +10,6 @@ class Api::V1::WeightsController < Api::V1::BaseController
   private
 
   def weight_params
-    params.require(:weight).permit(:pounds)
+    params.require(:weight).permit(:pounds, :currentDate)
   end
 end

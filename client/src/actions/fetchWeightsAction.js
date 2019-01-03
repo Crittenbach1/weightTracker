@@ -11,7 +11,12 @@ export function fetchWeights() {
       return response.json()
     })
      .then(function(weights) {
-        dispatch({type: 'FETCH_WEIGHTS', payload: weights})
+         let chartWeights = [];
+         for(let i = 0; i < weights.length; i++) {
+            let w = {x: parseInt(weights[i].currentDate), y: parseInt(weights[i].pounds)};
+            chartWeights.push(w);
+         }
+        dispatch({type: 'FETCH_WEIGHTS', payload: chartWeights})
     })
   }
 }

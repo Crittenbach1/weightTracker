@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(version: 2018_12_20_104700) do
 
   create_table "weights", force: :cascade do |t|
     t.string "pounds"
+    t.string "currentDate"
   end
 
 end

@@ -1,4 +1,4 @@
 class WeightSerializer < ActiveModel::Serializer
-  attributes :pounds
+  attributes :pounds, :currentDate
 
 end
