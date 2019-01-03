@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
+import {connect} from "react-redux";
 import Chart from '../components/Chart.jsx';
+import { saveWeight } from '../actions/saveWeightAction.js'
 
-export default class NewWeight extends Component {
+class NewWeight extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       userInput: '',
-      allWeights: [],
+      newWeight: [],
     }
   }
 
@@ -18,12 +20,12 @@ export default class NewWeight extends Component {
    }
 
   addToWeights(input){
-    let weightsArray = this.state.allWeights;
+    this.props.saveWeight({pounds: input});
 
-    weightsArray.push({x: this.state.allWeights.length, y: parseInt(input)});
+    let newWeight = {x: 12, y: parseInt(input)};
 
     this.setState({
-      allWeights: weightsArray,
+      newWeight: [newWeight],
     })
   }
 
@@ -39,9 +41,12 @@ export default class NewWeight extends Component {
            type="text"
          />
          <button onClick={ ()=> this.addToWeights(this.state.userInput) }>Submit</button>
-         <Chart info={this.state.allWeights} />
+         <Chart info={this.state.newWeight} />
 
       </div>
     )
   }
 }
+
+
+export default connect(null, {saveWeight})(NewWeight);
