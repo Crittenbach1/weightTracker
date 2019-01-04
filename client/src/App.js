@@ -21,7 +21,6 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1>Welcome to Weight Tracker</h1>
           <NewWeight />
         </header>
       </div>

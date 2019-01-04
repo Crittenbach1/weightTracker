@@ -14,6 +14,7 @@ class NewWeight extends Component {
       userInput: '',
       startDate: new Date(),
       newWeight: [],
+      lastDay: [0,0]
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -35,16 +36,19 @@ class NewWeight extends Component {
 
   addToWeights(input, date){
     debugger
-    //var currentDate = Math.round((new Date()).getTime() / 1000) * 1000;
     var currentDate = Math.round(date.getTime() / 1000) * 1000;
-    this.props.saveWeight({ pounds: input, currentDate: currentDate.toString() });
+    if (currentDate <= this.state.lastDay[0]) {
+      alert("enter a date past " + this.state.lastDay[1]);
+    } else {
+      this.props.saveWeight({ pounds: input, currentDate: currentDate.toString() });
 
-    let newWeight = {x: currentDate, y: parseInt(input)};
+      let newWeight = {x: currentDate, y: parseInt(input)};
 
-    this.setState({
-      newWeight: [newWeight],
-      startDate: date
-    })
+      this.setState({
+        newWeight: [newWeight],
+        lastDay: [currentDate, date]
+      })
+   }
   }
 
 
@@ -52,13 +56,13 @@ class NewWeight extends Component {
 
     return (
       <div style={{height: 200 + "px", width: 100 + "%"}}>
-        <p>Enter weight:</p>
+        Enter weight:
         <input
          onChange={ (e)=>this.changeUserInput(e.target.value) }
            value={this.state.userInput}
            type="text"
          />
-         <p>Enter date:</p>
+         Enter date:
          <DatePicker
            selected={this.state.startDate}
            onChange={this.handleChange}

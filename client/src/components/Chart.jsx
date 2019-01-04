@@ -14,7 +14,7 @@ class Chart extends Component {
       this.setState({ data: [...this.state.data, ...nextProps.info] });
     }
   }
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -30,7 +30,7 @@ class Chart extends Component {
 			exportEnabled: true,
 			theme: "light2", // "light1", "dark1", "dark2"
 			title:{
-				text: "Weights"
+				text: "Weight Tracker"
 			},
 			axisY: {
 				title: "Weight",
