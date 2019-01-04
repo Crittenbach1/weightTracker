@@ -65,10 +65,8 @@ class Chart extends Component {
 }
 
 function mapStateToProps(state) {
-  debugger
-
    return {
-    weightData: state.fetchWeights
+    weightData: state.fetchWeights,
    }
 }
 

@@ -37,8 +37,8 @@ class NewWeight extends Component {
   addToWeights(input, date){
     debugger
     var currentDate = Math.round(date.getTime() / 1000) * 1000;
-    if (currentDate <= this.state.lastDay[0]) {
-      alert("enter a date past " + this.state.lastDay[1]);
+    if (currentDate <= this.props.lastDay || currentDate <= this.state.lastDay[0]) {
+      alert("date is too low");
     } else {
       this.props.saveWeight({ pounds: input, currentDate: currentDate.toString() });
 
@@ -75,5 +75,18 @@ class NewWeight extends Component {
   }
 }
 
+function mapStateToProps(state) {
 
-export default connect(null, {saveWeight})(NewWeight);
+   if (state.fetchWeights.length > 0) {
+     var lastDay = state.fetchWeights[state.fetchWeights.length - 1].x;
+   } else {
+     var lastDay = 0;
+   }
+
+   return {
+    lastDay: lastDay
+   }
+}
+
+
+export default connect(mapStateToProps, {saveWeight})(NewWeight);
