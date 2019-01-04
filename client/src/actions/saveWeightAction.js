@@ -15,7 +15,6 @@ export function saveWeight(rec) {
     .then(res => {
       return res.json()
     }).then(weight => {
-      debugger
        dispatch({type: 'SAVE_WEIGHT', payload: weight})
    })
   }
