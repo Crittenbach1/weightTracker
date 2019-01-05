@@ -1,6 +1,9 @@
 class Api::V1::PersonsController < Api::V1::BaseController
   def index
-    respond_with Person.all
+    @persons = Person.all
+    respond_to do |format|
+       format.json { render json: @persons, include: "weights" }
+     end
   end
 
   def create
@@ -11,7 +14,10 @@ class Api::V1::PersonsController < Api::V1::BaseController
     #                          currentDate: @weights_attributes[:pounds],
     #                          person_id: @person.id })
 
-    respond_with :api, :v1, Person.create(person_params)
+    #respond_with :api, :v1, Person.create(person_params)
+    respond_to do |format|
+       format.json { render json: @person, include: "weights" }
+     end
   end
 
   private
