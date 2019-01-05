@@ -6,15 +6,17 @@ class Api::V1::PersonsController < Api::V1::BaseController
   def create
     binding.pry
     @person = Person.create(person_params)
-    @weight = @person.weights.build(params[:weights_attributes])
+  #  @weights_attributes = params[:weights_attributes]
+  #  @weight = Weight.create({ pounds: @weights_attributes[:pounds],
+    #                          currentDate: @weights_attributes[:pounds],
+    #                          person_id: @person.id })
 
-    #@person.weights.build(params[:weights_attributes])
-    respond_with :api, :v1, Person.create(person_params), include: "person.weights"
+    respond_with :api, :v1, Person.create(person_params)
   end
 
   private
 
   def person_params
-    params.require(:person).permit(:name, weights_attributes: [:pounds, :currentDate])
+    params.require(:person).permit(:id, :name, weights_attributes: [:pounds, :currentDate])
   end
 end
