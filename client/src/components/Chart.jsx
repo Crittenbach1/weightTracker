@@ -52,12 +52,7 @@ class Chart extends Component {
 
     return (
       <div className="chart" style={{height: 200 + "px", width: 100 + "%"}}>
-        <CanvasJSChart options = {options}
-          /* onRef={ref => this.chart = ref} */
-        />
-        <ul>
-         {this.state.data.map(val=> <li>{val.x}</li>)}
-        </ul>
+        <CanvasJSChart options={options} />
       </div>
     );
   }

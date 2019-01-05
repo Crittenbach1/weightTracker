@@ -10,11 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_20_104700) do
+ActiveRecord::Schema.define(version: 2019_01_05_021402) do
+
+  create_table "people", force: :cascade do |t|
+    t.string "name"
+  end
 
   create_table "weights", force: :cascade do |t|
     t.string "pounds"
     t.string "currentDate"
+    t.integer "person_id"
   end
 
 end

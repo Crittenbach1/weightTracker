@@ -3,6 +3,7 @@ class CreateWeights < ActiveRecord::Migration[5.2]
     create_table :weights do |t|
       t.string :pounds
       t.string :currentDate
+      t.integer :person_id
     end
   end
 end

@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
 import Chart from '../components/Chart.jsx';
-import { saveWeight } from '../actions/saveWeightAction.js'
+import { savePerson } from '../actions/savePersonAction.js'
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-class NewWeight extends Component {
+class NewPerson extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      userInput: '',
+      userNameInput: '',
+      userWeightInput: '',
       startDate: new Date(),
-      newWeight: [],
+      newPerson: [],
       lastDay: [0,0]
     }
     this.handleChange = this.handleChange.bind(this);
@@ -21,34 +22,40 @@ class NewWeight extends Component {
 
 
   handleChange(input) {
-    debugger
     this.setState({
       startDate: input
     });
   }
 
-
-  changeUserInput(input){
+  changeUserNameInput(input){
       this.setState({
-        userInput: input
+        userNameInput: input
       });
    }
 
-  addToWeights(input, date){
+   changeUserWeightInput(input){
+       this.setState({
+         userWeightInput: input
+       });
+    }
+
+  addToWeights(name, weight, date){
     debugger
+
     var currentDate = Math.round(date.getTime() / 1000) * 1000;
     if (currentDate <= this.props.lastDay || currentDate <= this.state.lastDay[0]) {
       alert("date is too low");
     } else {
-      this.props.saveWeight({ pounds: input, currentDate: currentDate.toString() });
+      this.props.savePerson({ name: name, weights_attributes: [{ pounds: weight, currentDate: currentDate.toString() }] });
 
-      let newWeight = {x: currentDate, y: parseInt(input)};
+      let newPerson = { name: name, weight :{x: currentDate, y: parseInt(weight)} };
 
       this.setState({
-        newWeight: [newWeight],
+        newPerson: [newPerson],
         lastDay: [currentDate, date]
       })
    }
+
   }
 
 
@@ -56,29 +63,39 @@ class NewWeight extends Component {
 
     return (
       <div style={{height: 200 + "px", width: 100 + "%"}}>
-        Enter weight:
+        Enter Name:
         <input
-         onChange={ (e)=>this.changeUserInput(e.target.value) }
-           value={this.state.userInput}
+         onChange={ (e)=>this.changeUserNameInput(e.target.value) }
+           value={this.state.userNameInput}
            type="text"
          />
+         Enter Weight:
+         <input
+          onChange={ (e)=>this.changeUserWeightInput(e.target.value) }
+            value={this.state.userWeightInput}
+            type="text"
+          />
          Enter date:
          <DatePicker
            selected={this.state.startDate}
            onChange={this.handleChange}
           />
-         <button onClick={ ()=> this.addToWeights(this.state.userInput, this.state.startDate) }>Submit</button>
-         <Chart info={this.state.newWeight} />
+         <button onClick={ ()=> this.addToWeights(
+                                this.state.userNameInput,
+                                this.state.userWeightInput,
+                                this.state.startDate)
+          }>Submit</button>
+         <Chart info={this.state.newPerson} />
 
       </div>
     )
   }
 }
 
-function mapStateToProps(state) {
+/*function mapStateToProps(state) {
 
-   if (state.fetchWeights.length > 0) {
-     var lastDay = state.fetchWeights[state.fetchWeights.length - 1].x;
+   if (state.fetchPersons.length > 0) {
+     var lastDay = state.fetchPersons[state.fetchPersons.length - 1].x;
    } else {
      var lastDay = 0;
    }
@@ -87,6 +104,5 @@ function mapStateToProps(state) {
     lastDay: lastDay
    }
 }
-
-
-export default connect(mapStateToProps, {saveWeight})(NewWeight);
+*/
+export default connect(null, {savePerson})(NewPerson);

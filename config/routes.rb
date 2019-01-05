@@ -3,7 +3,11 @@ Rails.application.routes.draw do
 
     namespace :api do
       namespace :v1 do
-        resources :weights, only: [:index, :show, :create, :destroy, :update]
+        resources :persons, :weights
+        
+        resources :persons do
+          resource :weights
+        end
       end
     end
   end

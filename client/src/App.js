@@ -20,8 +20,9 @@ class App extends Component {
 
     return (
       <div className="App">
+        <NewWeight />
         <header className="App-header">
-          <NewWeight />
+
         </header>
       </div>
     );
