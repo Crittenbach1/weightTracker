@@ -3,9 +3,16 @@ import {connect} from "react-redux";
 import Chart from '../components/Chart.jsx';
 import { savePerson } from '../actions/savePersonAction.js'
 import DatePicker from "react-datepicker";
+import Select from 'react-select';
 
 import "react-datepicker/dist/react-datepicker.css";
-
+/*  ****** Select Options format *******
+const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' }
+];
+*/
 class NewPerson extends Component {
   constructor(props) {
     super(props);
@@ -13,15 +20,21 @@ class NewPerson extends Component {
     this.state = {
       userNameInput: '',
       userWeightInput: '',
+      selectedOption: null,
       startDate: new Date(),
       newPerson: [],
       lastDay: [0,0]
     }
-    this.handleChange = this.handleChange.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
+  }
+
+  handleSelectChange = (selectedOption) => {
+    this.setState({ selectedOption });
+    console.log(`Option selected:`, selectedOption);
   }
 
 
-  handleChange(input) {
+  handleDateChange(input) {
     this.setState({
       startDate: input
     });
@@ -41,7 +54,9 @@ class NewPerson extends Component {
 
   addToWeights(name, weight, date){
     debugger
-
+    if (this.state.selectedOption != null) {
+      // New weight/Date with selected persons id
+    }
     var currentDate = Math.round(date.getTime() / 1000) * 1000;
     if (currentDate <= this.props.lastDay || currentDate <= this.state.lastDay[0]) {
       alert("date is too low");
@@ -60,6 +75,14 @@ class NewPerson extends Component {
 
 
   render() {
+    debugger
+    let options = [];
+    for(var i=0; i < this.props.peopleData.length; i++) {
+        let option = { value: "id", label: this.props.peopleData[i].name }
+        options.push(option);
+    }
+    debugger
+    const { selectedOption } = this.state;
 
     return (
       <div style={{height: 200 + "px", width: 100 + "%"}}>
@@ -75,10 +98,15 @@ class NewPerson extends Component {
             value={this.state.userWeightInput}
             type="text"
           />
+          <Select
+           value={selectedOption}
+           onChange={this.handleSelectChange}
+           options={options}
+         />
          Enter date:
          <DatePicker
            selected={this.state.startDate}
-           onChange={this.handleChange}
+           onChange={this.handleDateChange}
           />
          <button onClick={ ()=> this.addToWeights(
                                 this.state.userNameInput,
@@ -102,6 +130,7 @@ function mapStateToProps(state) {
    */
 
    return {
+     peopleData: state.fetchPeople,
      newPerson: state.savePerson
    }
 }
