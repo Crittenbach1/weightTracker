@@ -1,9 +1,9 @@
 import fetch from 'isomorphic-fetch';
 
-export function savePerson(rec) {
+export function saveWeight(rec) {
   debugger
   return function(dispatch){
-    return fetch(`/api/v1/persons`, {
+    return fetch(`/api/v1/weights`, {
       credentials: "include",
       method: "POST",
       headers: {
@@ -14,8 +14,9 @@ export function savePerson(rec) {
     })
     .then(res => {
       return res.json()
-    }).then(person => {
-         dispatch({type: 'SAVE_PERSON', payload: person})
+    }).then(weight => {
+         debugger
+         dispatch({type: 'SAVE_WEIGHT', payload: weight})
     })
   }
 }

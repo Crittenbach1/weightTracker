@@ -21,6 +21,7 @@ export function fetchPeople() {
                      weights.push(dataPoints);
                  }
                let person = { name: people[i].name,
+                              id: people[i].id,
                               type: "line",
                               xValueType: "dateTime",
                               toolTipContent: "{x}: {y}lb",

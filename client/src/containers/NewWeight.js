@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {connect} from "react-redux";
 import Chart from '../components/Chart.jsx';
 import { savePerson } from '../actions/savePersonAction.js'
+import { saveWeight } from '../actions/saveWeightAction.js'
 import DatePicker from "react-datepicker";
 import Select from 'react-select';
 
@@ -54,20 +55,18 @@ class NewPerson extends Component {
 
   addToWeights(name, weight, date){
     debugger
-    if (this.state.selectedOption != null) {
-      // New weight/Date with selected persons id
-    }
+
     var currentDate = Math.round(date.getTime() / 1000) * 1000;
-    if (currentDate <= this.props.lastDay || currentDate <= this.state.lastDay[0]) {
-      alert("date is too low");
+    if (this.state.selectedOption != null) {
+      debugger
+      this.props.saveWeight({ pounds: weight, currentDate: currentDate.toString(), person_id: this.state.selectedOption.id });
     } else {
       this.props.savePerson({ name: name, weights_attributes: [{ pounds: weight, currentDate: currentDate.toString() }] });
-
       let newPerson = { name: name, type: "line", weights: [{x: currentDate, y: parseInt(weight)}] };
 
       this.setState({
         newPerson: [newPerson],
-        lastDay: [currentDate, date]
+        //lastDay: [currentDate, date]
       })
    }
 
@@ -78,7 +77,7 @@ class NewPerson extends Component {
     debugger
     let options = [];
     for(var i=0; i < this.props.peopleData.length; i++) {
-        let option = { value: "id", label: this.props.peopleData[i].name }
+        let option = { id: this.props.peopleData[i].id, label: this.props.peopleData[i].name }
         options.push(option);
     }
     debugger
@@ -135,4 +134,4 @@ function mapStateToProps(state) {
    }
 }
 
-export default connect(mapStateToProps, {savePerson})(NewPerson);
+export default connect(mapStateToProps, {savePerson, saveWeight})(NewPerson);
