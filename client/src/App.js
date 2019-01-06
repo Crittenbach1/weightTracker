@@ -6,14 +6,14 @@ import {
   Route
 } from 'react-router-dom';
 import NewWeight from './containers/NewWeight.js';
-import { fetchWeights } from './actions/fetchWeightsAction.js'
+import { fetchPeople } from './actions/fetchPeopleAction.js'
 import './App.css';
 
 
 class App extends Component {
 
  componentDidMount() {
-   this.props.fetchWeights();
+   this.props.fetchPeople();
  }
 
   render() {
@@ -30,4 +30,4 @@ class App extends Component {
 }
 
 
-export default connect(null, {fetchWeights})(App);
+export default connect(null, {fetchPeople})(App);

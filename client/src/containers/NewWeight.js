@@ -48,7 +48,7 @@ class NewPerson extends Component {
     } else {
       this.props.savePerson({ name: name, weights_attributes: [{ pounds: weight, currentDate: currentDate.toString() }] });
 
-      let newPerson = { name: name, weight :{x: currentDate, y: parseInt(weight)} };
+      let newPerson = { name: name, type: "line", weights: [{x: currentDate, y: parseInt(weight)}] };
 
       this.setState({
         newPerson: [newPerson],
@@ -85,24 +85,25 @@ class NewPerson extends Component {
                                 this.state.userWeightInput,
                                 this.state.startDate)
           }>Submit</button>
-         <Chart info={this.state.newPerson} />
+         <Chart newPerson={this.state.newPerson} />
 
       </div>
     )
   }
 }
 
-/*function mapStateToProps(state) {
-
-   if (state.fetchPersons.length > 0) {
+function mapStateToProps(state) {
+    debugger
+  /* if (state.fetchPersons.length > 0) {
      var lastDay = state.fetchPersons[state.fetchPersons.length - 1].x;
    } else {
      var lastDay = 0;
    }
+   */
 
    return {
-    lastDay: lastDay
+     newPerson: state.savePerson
    }
 }
-*/
-export default connect(null, {savePerson})(NewPerson);
+
+export default connect(mapStateToProps, {savePerson})(NewPerson);

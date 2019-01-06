@@ -8,10 +8,12 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 class Chart extends Component {
 
   componentWillReceiveProps(nextProps) {
-    if ( nextProps.info.length == 0 ) {
-      this.setState({ data: nextProps.weightData });
+    debugger
+    if ( nextProps.newPerson.length == 0 ) {
+      this.setState({ data: nextProps.peopleData });
     } else {
-      this.setState({ data: [...this.state.data, ...nextProps.info] });
+
+      this.setState({ data: [...this.state.data, ...nextProps.newPerson] });
     }
   }
 
@@ -24,7 +26,7 @@ class Chart extends Component {
   }
 
   render() {
-
+     debugger
     const options = {
 			animationEnabled: true,
 			exportEnabled: true,
@@ -42,13 +44,82 @@ class Chart extends Component {
 				prefix: "",
 				interval: 2
 			},
-			data: [{
-				type: "line",
-        xValueType: "dateTime",
-				toolTipContent: "{x}: {y}lb",
-				dataPoints: this.state.data,
-			}]
-		}
+	    	data: this.state.data
+      }
+     /*
+     data: [
+     {
+       type: "line",
+       xValueType: "dateTime",
+       toolTipContent: "{x}: {y}lb",
+       dataPoints: [
+       { x: 10, y: 21 },
+       { x: 20, y: 25},
+       { x: 30, y: 20 },
+       { x: 40, y: 25 },
+       { x: 50, y: 27 },
+       { x: 60, y: 28 },
+       { x: 70, y: 28 },
+       { x: 80, y: 24 },
+       { x: 90, y: 26}
+
+       ]
+     },
+       {
+       type: "line",
+       xValueType: "dateTime",
+       toolTipContent: "{x}: {y}lb",
+       dataPoints: [
+       { x: 10, y: 31 },
+       { x: 20, y: 35},
+       { x: 30, y: 30 },
+       { x: 40, y: 35 },
+       { x: 50, y: 35 },
+       { x: 60, y: 38 },
+       { x: 70, y: 38 },
+       { x: 80, y: 34 },
+       { x: 90, y: 44}
+
+       ]
+     },
+       {
+       type: "line",
+       xValueType: "dateTime",
+       toolTipContent: "{x}: {y}lb",
+       dataPoints: [
+       { x: 10, y: 45 },
+       { x: 20, y: 50},
+       { x: 30, y: 40 },
+       { x: 40, y: 45 },
+       { x: 50, y: 45 },
+       { x: 60, y: 48 },
+       { x: 70, y: 43 },
+       { x: 80, y: 41 },
+       { x: 90, y: 28}
+
+       ]
+     },
+       {
+       type: "line",
+       xValueType: "dateTime",
+       toolTipContent: "{x}: {y}lb",
+       dataPoints: [
+       { x: 10, y: 71 },
+       { x: 20, y: 55},
+       { x: 30, y: 50 },
+       { x: 40, y: 65 },
+       { x: 50, y: 95 },
+       { x: 60, y: 68 },
+       { x: 70, y: 28 },
+       { x: 80, y: 34 },
+       { x: 90, y: 14}
+
+       ]
+     }
+     ]
+     */
+
+
 
     return (
       <div className="chart" style={{height: 200 + "px", width: 100 + "%"}}>
@@ -60,8 +131,10 @@ class Chart extends Component {
 }
 
 function mapStateToProps(state) {
+  debugger
+
    return {
-    weightData: state.fetchWeights,
+     peopleData: state.fetchPeople,
    }
 }
 

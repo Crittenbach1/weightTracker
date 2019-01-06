@@ -15,8 +15,11 @@ export function savePerson(rec) {
     .then(res => {
       return res.json()
     }).then(person => {
-       debugger
-       dispatch({type: 'SAVE_PERSON', payload: person})
+       if (person.id == null) {
+         dispatch({type: 'SAVE_PERSON', payload: "name taken"})
+       } else {
+         dispatch({type: 'SAVE_PERSON', payload: person})
+       }
    })
   }
 }

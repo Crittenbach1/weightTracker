@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
 
-import fetchWeights from './fetchWeightsReducer.js';
-
+import fetchPeople from './fetchPeopleReducer.js';
+import savePerson from './savePersonReducer.js';
 
 export default combineReducers({
-   fetchWeights,
+   fetchPeople,
+   savePerson
 });
