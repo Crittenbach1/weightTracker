@@ -93,11 +93,9 @@ class NewPerson extends Component {
 
 
   render() {
-    debugger
 
     let options = this.getSelectOptions();
 
-    debugger
     const { selectedOption } = this.state;
 
     return (
@@ -138,17 +136,8 @@ class NewPerson extends Component {
 }
 
 function mapStateToProps(state) {
-    debugger
-  /* if (state.fetchPersons.length > 0) {
-     var lastDay = state.fetchPersons[state.fetchPersons.length - 1].x;
-   } else {
-     var lastDay = 0;
-   }
-   */
-
    return {
-     peopleData: state.fetchPeople,
-     newPerson: state.savePerson
+     peopleData: state.fetchPeople
    }
 }
 

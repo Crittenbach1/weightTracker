@@ -4,6 +4,7 @@ export default (state = [], action) => {
       return action.payload
     case 'SAVE_PERSON':
         debugger
+
         let newPerson = { name: action.payload.name,
                        id: action.payload.id,
                        type: "line",
@@ -14,12 +15,21 @@ export default (state = [], action) => {
         return [...state, newPerson]
     case 'SAVE_WEIGHT':
         debugger
+        function compare(a,b) {
+           if (a.x < b.x)
+             return -1;
+           if (a.x > b.x)
+             return 1;
+           return 0;
+         }
+
         let newWeight = {x: parseInt(action.payload.currentDate), y: parseInt(action.payload.pounds)}
         let personToUpdate = [];
         let people = state;
         for (let i = 0; i < people.length; i++) {
           if (people[i].id == action.payload.person_id) {
               people[i].dataPoints.push(newWeight);
+              people[i].dataPoints = people[i].dataPoints.sort(compare);
               personToUpdate = people[i];
           }
         }
@@ -34,7 +44,7 @@ export default (state = [], action) => {
 
         debugger
         return newPeople
-        
+
     default:
       return state;
   }

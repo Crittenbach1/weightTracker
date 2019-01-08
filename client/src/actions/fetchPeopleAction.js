@@ -11,6 +11,14 @@ export function fetchPeople() {
       return response.json()
     })
      .then(function(people) {
+             function compare(a,b) {
+                if (a.x < b.x)
+                  return -1;
+                if (a.x > b.x)
+                  return 1;
+                return 0;
+              }
+
              let chartPeople = [];
              for(let i = 0; i < people.length; i++) {
                 let weights = [];
@@ -20,6 +28,8 @@ export function fetchPeople() {
                                        y: parseInt(people[i].weights[j].pounds) };
                      weights.push(dataPoints);
                  }
+
+                  weights = weights.sort(compare);
                let person = { name: people[i].name,
                               id: people[i].id,
                               type: "line",
