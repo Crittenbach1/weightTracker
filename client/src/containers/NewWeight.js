@@ -18,9 +18,6 @@ class NewPerson extends Component {
       selectedOption: null,
       startDate: new Date(),
       error: ""
-    //  newPerson: [],
-    //  newWeight: [],
-    //  lastDay: [0,0]
     }
     this.handleDateChange = this.handleDateChange.bind(this);
   }
@@ -56,19 +53,25 @@ class NewPerson extends Component {
     checkForFormErrors(name, weight) {
       let error = false;
       if (weight == "") {
-        this.setState({ error: <ul>
-                                 <li>weight cant be blank</li>
-                               </ul>  });
-         error = true;
+        this.setState({ error: <ul><li>weight cant be blank</li></ul> });
+        error = true;
       }
-
       if (name == "" && this.state.selectedOption == null) {
-          this.setState({ error: <ul>
-                                   <li>name cant be blank</li>
-                                 </ul> });
-         error = true;
+        this.setState({ error: <ul><li>name cant be blank</li></ul> });
+        error = true;
       }
        return error;
+    }
+
+    getSelectOptions() {
+      let options = [];
+      for(var i=0; i < this.props.peopleData.length; i++) {
+          if (this.props.peopleData[i].id != null) {
+            let option = { id: this.props.peopleData[i].id, label: this.props.peopleData[i].name }
+            options.push(option);
+          }
+      }
+      return options;
     }
 
 
@@ -91,14 +94,8 @@ class NewPerson extends Component {
 
   render() {
     debugger
-    let options = [];
-    let error = false;
-    for(var i=0; i < this.props.peopleData.length; i++) {
-        if (this.props.peopleData[i].id != null) {
-          let option = { id: this.props.peopleData[i].id, label: this.props.peopleData[i].name }
-          options.push(option);
-        }
-    }
+
+    let options = this.getSelectOptions();
 
     debugger
     const { selectedOption } = this.state;
