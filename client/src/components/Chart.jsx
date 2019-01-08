@@ -10,20 +10,10 @@ class Chart extends Component {
   componentWillReceiveProps(nextProps) {
     debugger
 
-  //  if ( nextProps.newPerson.length == 0 ) {   // first data at load
     if (nextProps.peopleData != this.state.data) {
       this.setState({ data: nextProps.peopleData });
     }
-/*
-    if ( nextProps.newPerson.length > 0 && nextProps.peopleData.length > this.state.data.length ) {  // adds a new person
-      this.setState({ data: nextProps.peopleData });
-    }
 
-    if ( nextProps.newWeight.length > 0 && nextProps.peopleData != this.state.data ) {  // adds a new person
-      this.setState({ data: nextProps.peopleData });
-    }
-*/
-    // next one will add a weight to a selected
   }
 
   constructor(props) {
@@ -55,80 +45,6 @@ class Chart extends Component {
 			},
 	    	data: this.state.data
       }
-     /*
-     data: [
-     {
-       type: "line",
-       xValueType: "dateTime",
-       toolTipContent: "{x}: {y}lb",
-       dataPoints: [
-       { x: 10, y: 21 },
-       { x: 20, y: 25},
-       { x: 30, y: 20 },
-       { x: 40, y: 25 },
-       { x: 50, y: 27 },
-       { x: 60, y: 28 },
-       { x: 70, y: 28 },
-       { x: 80, y: 24 },
-       { x: 90, y: 26}
-
-       ]
-     },
-       {
-       type: "line",
-       xValueType: "dateTime",
-       toolTipContent: "{x}: {y}lb",
-       dataPoints: [
-       { x: 10, y: 31 },
-       { x: 20, y: 35},
-       { x: 30, y: 30 },
-       { x: 40, y: 35 },
-       { x: 50, y: 35 },
-       { x: 60, y: 38 },
-       { x: 70, y: 38 },
-       { x: 80, y: 34 },
-       { x: 90, y: 44}
-
-       ]
-     },
-       {
-       type: "line",
-       xValueType: "dateTime",
-       toolTipContent: "{x}: {y}lb",
-       dataPoints: [
-       { x: 10, y: 45 },
-       { x: 20, y: 50},
-       { x: 30, y: 40 },
-       { x: 40, y: 45 },
-       { x: 50, y: 45 },
-       { x: 60, y: 48 },
-       { x: 70, y: 43 },
-       { x: 80, y: 41 },
-       { x: 90, y: 28}
-
-       ]
-     },
-       {
-       type: "line",
-       xValueType: "dateTime",
-       toolTipContent: "{x}: {y}lb",
-       dataPoints: [
-       { x: 10, y: 71 },
-       { x: 20, y: 55},
-       { x: 30, y: 50 },
-       { x: 40, y: 65 },
-       { x: 50, y: 95 },
-       { x: 60, y: 68 },
-       { x: 70, y: 28 },
-       { x: 80, y: 34 },
-       { x: 90, y: 14}
-
-       ]
-     }
-     ]
-     */
-
-
 
     return (
       <div className="chart" style={{height: 200 + "px", width: 100 + "%"}}>

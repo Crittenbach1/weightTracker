@@ -7,13 +7,7 @@ import DatePicker from "react-datepicker";
 import Select from 'react-select';
 
 import "react-datepicker/dist/react-datepicker.css";
-/*  ****** Select Options format *******
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' }
-];
-*/
+
 class NewPerson extends Component {
   constructor(props) {
     super(props);
@@ -44,6 +38,7 @@ class NewPerson extends Component {
 
   changeUserNameInput(input){
       this.setState({
+        selectedOption: null,
         userNameInput: input
       });
    }
