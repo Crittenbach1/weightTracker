@@ -10,10 +10,11 @@ class Chart extends Component {
   componentWillReceiveProps(nextProps) {
     debugger
 
-    if ( nextProps.newPerson.length == 0 ) {   // first data at load
+  //  if ( nextProps.newPerson.length == 0 ) {   // first data at load
+    if (nextProps.peopleData != this.state.data) {
       this.setState({ data: nextProps.peopleData });
     }
-
+/*
     if ( nextProps.newPerson.length > 0 && nextProps.peopleData.length > this.state.data.length ) {  // adds a new person
       this.setState({ data: nextProps.peopleData });
     }
@@ -21,7 +22,7 @@ class Chart extends Component {
     if ( nextProps.newWeight.length > 0 && nextProps.peopleData != this.state.data ) {  // adds a new person
       this.setState({ data: nextProps.peopleData });
     }
-
+*/
     // next one will add a weight to a selected
   }
 
