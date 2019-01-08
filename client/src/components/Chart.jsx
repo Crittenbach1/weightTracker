@@ -14,20 +14,8 @@ class Chart extends Component {
       this.setState({ data: nextProps.peopleData });
     }
 
-
-
-    if ( nextProps.newPerson.length > 0 && nextProps.peopleData.length == undefined) {  // adds a new person
-      debugger
-
-      let newPerson = { name: nextProps.peopleData.name,
-                     id: nextProps.peopleData.id,
-                     type: "line",
-                     xValueType: "dateTime",
-                     toolTipContent: "{x}: {y}lb",
-                     dataPoints: [{ x: parseInt(nextProps.peopleData.weights[0].currentDate),
-                                   y: parseInt(nextProps.peopleData.weights[0].pounds) }] }
-          debugger
-      this.setState({ data: [...this.state.data, newPerson] });
+    if ( nextProps.newPerson.length > 0 && nextProps.peopleData.length > this.state.data.length ) {  // adds a new person
+      this.setState({ data: nextProps.peopleData });
     }
 
     // next one with add a weight to a selected
