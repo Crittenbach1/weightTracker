@@ -18,7 +18,11 @@ class Chart extends Component {
       this.setState({ data: nextProps.peopleData });
     }
 
-    // next one with add a weight to a selected
+    if ( nextProps.newWeight.length > 0 && nextProps.peopleData != this.state.data ) {  // adds a new person
+      this.setState({ data: nextProps.peopleData });
+    }
+
+    // next one will add a weight to a selected
   }
 
   constructor(props) {

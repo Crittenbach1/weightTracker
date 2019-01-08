@@ -24,6 +24,7 @@ class NewPerson extends Component {
       selectedOption: null,
       startDate: new Date(),
       newPerson: [],
+      newWeight: [],
       lastDay: [0,0]
     }
     this.handleDateChange = this.handleDateChange.bind(this);
@@ -60,13 +61,18 @@ class NewPerson extends Component {
     if (this.state.selectedOption != null) {
       debugger
       this.props.saveWeight({ pounds: weight, currentDate: currentDate.toString(), person_id: this.state.selectedOption.id });
+      let newWeight = { pounds: weight, currentDate: currentDate, person_id: this.state.selectedOption.id };
+      this.setState({
+        newWeight: [newWeight],
+        newPerson: []
+      })
     } else {
       this.props.savePerson({ name: name, weights_attributes: [{ pounds: weight, currentDate: currentDate.toString() }] });
       let newPerson = { name: name, type: "line", weights: [{x: currentDate, y: parseInt(weight)}] };
 
       this.setState({
         newPerson: [newPerson],
-        //lastDay: [currentDate, date]
+        newWeight: []
       })
    }
 
@@ -112,7 +118,7 @@ class NewPerson extends Component {
                                 this.state.userWeightInput,
                                 this.state.startDate)
           }>Submit</button>
-         <Chart newPerson={this.state.newPerson} />
+         <Chart newWeight={this.state.newWeight} newPerson={this.state.newPerson}/>
 
       </div>
     )
