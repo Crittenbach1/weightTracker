@@ -10,22 +10,27 @@ class Chart extends Component {
   componentWillReceiveProps(nextProps) {
     debugger
 
-    if ( nextProps.newPerson.length ==  0 ) {
+    if ( nextProps.newPerson.length == 0 ) {   // first data at load
       this.setState({ data: nextProps.peopleData });
     }
-    if ( nextProps.newPerson.length > 0 ) {
 
+
+
+    if ( nextProps.newPerson.length > 0 && nextProps.peopleData.length == undefined) {  // adds a new person
       debugger
 
-      let newPerson = { name: nextProps.newPerson[0].name,
+      let newPerson = { name: nextProps.peopleData.name,
+                     id: nextProps.peopleData.id,
                      type: "line",
                      xValueType: "dateTime",
                      toolTipContent: "{x}: {y}lb",
-                     dataPoints: [{ x: parseInt(nextProps.newPerson[0].weights[0].x),
-                                   y: parseInt(nextProps.newPerson[0].weights[0].y) }] }
+                     dataPoints: [{ x: parseInt(nextProps.peopleData.weights[0].currentDate),
+                                   y: parseInt(nextProps.peopleData.weights[0].pounds) }] }
           debugger
       this.setState({ data: [...this.state.data, newPerson] });
     }
+
+    // next one with add a weight to a selected
   }
 
   constructor(props) {

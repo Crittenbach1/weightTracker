@@ -5,7 +5,7 @@ export default (state = [], action) => {
     case 'SAVE_PERSON':
         return action.payload
     case 'SAVE_WEIGHT':
-        return action.payload 
+        return action.payload
     default:
       return state;
   }
