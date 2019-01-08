@@ -78,8 +78,10 @@ class NewPerson extends Component {
     debugger
     let options = [];
     for(var i=0; i < this.props.peopleData.length; i++) {
-        let option = { id: this.props.peopleData[i].id, label: this.props.peopleData[i].name }
-        options.push(option);
+        if (this.props.peopleData[i].id != null) {
+          let option = { id: this.props.peopleData[i].id, label: this.props.peopleData[i].name }
+          options.push(option);
+        }
     }
     debugger
     const { selectedOption } = this.state;

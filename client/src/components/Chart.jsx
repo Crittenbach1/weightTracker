@@ -9,11 +9,14 @@ class Chart extends Component {
 
   componentWillReceiveProps(nextProps) {
     debugger
+    if (nextProps.peopleData.length > 0) {
 
-    if (nextProps.peopleData != this.state.data) {
-      this.setState({ data: nextProps.peopleData });
+      if (nextProps.peopleData != this.state.data) {
+        if (nextProps.peopleData[nextProps.peopleData.length - 1].id != null) {
+          this.setState({ data: nextProps.peopleData });
+        }
+      }
     }
-
   }
 
   constructor(props) {
