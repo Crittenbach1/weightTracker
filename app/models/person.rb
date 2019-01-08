@@ -3,6 +3,5 @@ class Person < ActiveRecord::Base
    accepts_nested_attributes_for :weights
    validates :name, :uniqueness => true
    validates :name, :presence => true
-   validates :pounds, :presence => true
 
 end
