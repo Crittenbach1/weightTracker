@@ -34,6 +34,7 @@ export default (state = [], action) => {
 
         debugger
         return newPeople
+        
     default:
       return state;
   }

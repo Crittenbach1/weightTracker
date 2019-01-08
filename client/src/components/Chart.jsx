@@ -9,18 +9,23 @@ class Chart extends Component {
 
   componentWillReceiveProps(nextProps) {
     debugger
-    if (nextProps.peopleData.length > 0) {
 
-      if (nextProps.peopleData != this.state.data) {
-        if (nextProps.peopleData[nextProps.peopleData.length - 1].id != null) {
-          this.setState({ data: nextProps.peopleData,
-                          error: ""
-                        });
-        } else {
-          this.setState({ error: "Select a person or create a new one with a weight and date." });
-        }
-      }
-    }
+          if (nextProps.peopleData.length > 0) {
+
+            if (nextProps.peopleData != this.state.data) {
+              debugger
+              if (nextProps.peopleData[nextProps.peopleData.length - 1].id != null) {
+                this.setState({ data: nextProps.peopleData,
+                                error: ""
+                              });
+              } else {
+                this.setState({ error: <ul>
+                                         <li>name can't be taken</li>
+                                       </ul> });
+              }
+            }
+          }
+
   }
 
   constructor(props) {

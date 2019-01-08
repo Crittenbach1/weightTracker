@@ -26,7 +26,10 @@ class NewPerson extends Component {
   }
 
   handleSelectChange = (selectedOption) => {
-    this.setState({ selectedOption });
+    this.setState({
+                    selectedOption,
+                    userNameInput: ""
+                  });
     console.log(`Option selected:`, selectedOption);
   }
 
@@ -50,30 +53,38 @@ class NewPerson extends Component {
        });
     }
 
+    checkForFormErrors(name, weight) {
+      let error = false;
+      if (weight == "") {
+        this.setState({ error: <ul>
+                                 <li>weight cant be blank</li>
+                               </ul>  });
+         error = true;
+      }
+
+      if (name == "" && this.state.selectedOption == null) {
+          this.setState({ error: <ul>
+                                   <li>name cant be blank</li>
+                                 </ul> });
+         error = true;
+      }
+       return error;
+    }
+
 
   addToWeights(name, weight, date){
     debugger
 
-    var currentDate = Math.round(date.getTime() / 1000) * 1000;
-    if (this.state.selectedOption != null) {
-      debugger
-      this.props.saveWeight({ pounds: weight, currentDate: currentDate.toString(), person_id: this.state.selectedOption.id });
-      /*
-      let newWeight = { pounds: weight, currentDate: currentDate, person_id: this.state.selectedOption.id };
-      this.setState({
-        newWeight: [newWeight],
-        newPerson: []
-      })
-      */
-    } else {
-      this.props.savePerson({ name: name, weights_attributes: [{ pounds: weight, currentDate: currentDate.toString() }] });
-  /*    let newPerson = { name: name, type: "line", weights: [{x: currentDate, y: parseInt(weight)}] };
-
-      this.setState({
-        newPerson: [newPerson],
-        newWeight: []
-      }) */
-   }
+      if (this.checkForFormErrors(name, weight) == false) {
+        var currentDate = Math.round(date.getTime() / 1000) * 1000;
+        if (this.state.selectedOption != null) {
+          debugger
+          this.props.saveWeight({ pounds: weight, currentDate: currentDate.toString(), person_id: this.state.selectedOption.id });
+        } else {
+          this.props.savePerson({ name: name, weights_attributes: [{ pounds: weight, currentDate: currentDate.toString() }] });
+       }
+       this.setState({ error: "" });
+    }
 
   }
 
@@ -94,7 +105,6 @@ class NewPerson extends Component {
 
     return (
       <div style={{height: 200 + "px", width: 100 + "%"}}>
-        <h1>{this.state.error}</h1>
         Enter Name:
         <input
          onChange={ (e)=>this.changeUserNameInput(e.target.value) }
@@ -122,6 +132,7 @@ class NewPerson extends Component {
                                 this.state.userWeightInput,
                                 this.state.startDate)
           }>Submit</button>
+          {this.state.error}
          <Chart newWeight={this.state.newWeight} newPerson={this.state.newPerson}/>
 
       </div>
