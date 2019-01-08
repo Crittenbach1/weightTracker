@@ -11,10 +11,12 @@
     "popper.js": "^1.14.3",
     "react": "^16.7.0",
     "react-chartjs-2": "^2.7.4",
+    "react-datepicker": "^2.0.0",
     "react-dom": "^16.7.0",
     "react-redux": "^5.1.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^1.1.4",
+    "react-select": "^2.2.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0"
   },

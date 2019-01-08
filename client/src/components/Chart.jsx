@@ -9,11 +9,22 @@ class Chart extends Component {
 
   componentWillReceiveProps(nextProps) {
     debugger
-    if ( nextProps.newPerson.length == 0 ) {
-      this.setState({ data: nextProps.peopleData });
-    } else {
 
-      this.setState({ data: [...this.state.data, ...nextProps.newPerson] });
+    if ( nextProps.newPerson.length ==  0 ) {
+      this.setState({ data: nextProps.peopleData });
+    }
+    if ( nextProps.newPerson.length > 0 ) {
+
+      debugger
+
+      let newPerson = { name: nextProps.newPerson[0].name,
+                     type: "line",
+                     xValueType: "dateTime",
+                     toolTipContent: "{x}: {y}lb",
+                     dataPoints: [{ x: parseInt(nextProps.newPerson[0].weights[0].x),
+                                   y: parseInt(nextProps.newPerson[0].weights[0].y) }] }
+          debugger
+      this.setState({ data: [...this.state.data, newPerson] });
     }
   }
 
