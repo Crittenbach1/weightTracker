@@ -17,9 +17,10 @@ class NewPerson extends Component {
       userWeightInput: '',
       selectedOption: null,
       startDate: new Date(),
-      newPerson: [],
-      newWeight: [],
-      lastDay: [0,0]
+      error: ""
+    //  newPerson: [],
+    //  newWeight: [],
+    //  lastDay: [0,0]
     }
     this.handleDateChange = this.handleDateChange.bind(this);
   }
@@ -49,6 +50,7 @@ class NewPerson extends Component {
        });
     }
 
+
   addToWeights(name, weight, date){
     debugger
 
@@ -56,19 +58,21 @@ class NewPerson extends Component {
     if (this.state.selectedOption != null) {
       debugger
       this.props.saveWeight({ pounds: weight, currentDate: currentDate.toString(), person_id: this.state.selectedOption.id });
+      /*
       let newWeight = { pounds: weight, currentDate: currentDate, person_id: this.state.selectedOption.id };
       this.setState({
         newWeight: [newWeight],
         newPerson: []
       })
+      */
     } else {
       this.props.savePerson({ name: name, weights_attributes: [{ pounds: weight, currentDate: currentDate.toString() }] });
-      let newPerson = { name: name, type: "line", weights: [{x: currentDate, y: parseInt(weight)}] };
+  /*    let newPerson = { name: name, type: "line", weights: [{x: currentDate, y: parseInt(weight)}] };
 
       this.setState({
         newPerson: [newPerson],
         newWeight: []
-      })
+      }) */
    }
 
   }
@@ -77,17 +81,20 @@ class NewPerson extends Component {
   render() {
     debugger
     let options = [];
+    let error = false;
     for(var i=0; i < this.props.peopleData.length; i++) {
         if (this.props.peopleData[i].id != null) {
           let option = { id: this.props.peopleData[i].id, label: this.props.peopleData[i].name }
           options.push(option);
         }
     }
+
     debugger
     const { selectedOption } = this.state;
 
     return (
       <div style={{height: 200 + "px", width: 100 + "%"}}>
+        <h1>{this.state.error}</h1>
         Enter Name:
         <input
          onChange={ (e)=>this.changeUserNameInput(e.target.value) }

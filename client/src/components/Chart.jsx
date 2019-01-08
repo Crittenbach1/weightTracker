@@ -13,7 +13,11 @@ class Chart extends Component {
 
       if (nextProps.peopleData != this.state.data) {
         if (nextProps.peopleData[nextProps.peopleData.length - 1].id != null) {
-          this.setState({ data: nextProps.peopleData });
+          this.setState({ data: nextProps.peopleData,
+                          error: ""
+                        });
+        } else {
+          this.setState({ error: "Select a person or create a new one with a weight and date." });
         }
       }
     }
@@ -22,10 +26,13 @@ class Chart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: []
+      data: [],
+      error: ''
     }
 
   }
+
+
 
   render() {
      debugger
@@ -51,6 +58,8 @@ class Chart extends Component {
 
     return (
       <div className="chart" style={{height: 200 + "px", width: 100 + "%"}}>
+        {this.state.error}
+
         <CanvasJSChart options={options} />
       </div>
     );
