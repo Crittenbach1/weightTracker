@@ -16,6 +16,9 @@ export function saveWeight(rec) {
       return res.json()
     }).then(weight => {
          debugger
+           if (weight[0] == undefined) {
+             weight = [weight];
+           }
            dispatch({type: 'SAVE_WEIGHT', payload: weight})
     })
   }

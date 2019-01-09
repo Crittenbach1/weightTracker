@@ -30,7 +30,6 @@ class NewPerson extends Component {
     console.log(`Option selected:`, selectedOption);
   }
 
-
   handleDateChange(input) {
     this.setState({
       startDate: input
@@ -80,8 +79,13 @@ class NewPerson extends Component {
 
       if (this.checkForFormErrors(name, weight) == false) {
         var currentDate = Math.round(date.getTime() / 1000) * 1000;
+        var d = new Date(currentDate);
+        d.setHours(0);
+        d.setMinutes(0);
+        d.setSeconds(0);
+        var currentDate = d.setMilliseconds(0);
+
         if (this.state.selectedOption != null) {
-          debugger
           this.props.saveWeight({ pounds: weight, currentDate: currentDate.toString(), person_id: this.state.selectedOption.id });
         } else {
           this.props.savePerson({ name: name, weights_attributes: [{ pounds: weight, currentDate: currentDate.toString() }] });
@@ -128,7 +132,7 @@ class NewPerson extends Component {
                                 this.state.startDate)
           }>Submit</button>
           {this.state.error}
-         <Chart newWeight={this.state.newWeight} newPerson={this.state.newPerson}/>
+         <Chart />
 
       </div>
     )

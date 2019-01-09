@@ -23,12 +23,21 @@ export default (state = [], action) => {
            return 0;
          }
 
-        let newWeight = {x: parseInt(action.payload.currentDate), y: parseInt(action.payload.pounds)}
+        let newWeight = {x: parseInt(action.payload[0].currentDate), y: parseInt(action.payload[0].pounds)}
         let personToUpdate = [];
         let people = state;
         for (let i = 0; i < people.length; i++) {
-          if (people[i].id == action.payload.person_id) {
+          if (people[i].id == action.payload[0].person_id) {
+              debugger
+              let weights = [];
+              for (let j = 0; j < people[i].dataPoints.length; j++) {
+                if (people[i].dataPoints[j].x != action.payload[0].currentDate) {
+                   weights.push(people[i].dataPoints[j]);
+                }
+              }
+              people[i].dataPoints = weights;
               people[i].dataPoints.push(newWeight);
+
               people[i].dataPoints = people[i].dataPoints.sort(compare);
               personToUpdate = people[i];
           }
