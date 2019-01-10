@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
 import Chart from '../components/Chart.jsx';
+import PersonForm from '../components/PersonForm.js';
 import { savePerson } from '../actions/savePersonAction.js'
 import { saveWeight } from '../actions/saveWeightAction.js'
 import DatePicker from "react-datepicker";
 import Select from 'react-select';
+import $ from "jquery";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -13,22 +15,20 @@ class NewPerson extends Component {
     super(props);
 
     this.state = {
-      userNameInput: '',
-      userWeightInput: '',
-      selectedOption: null,
       startDate: new Date(),
+      numOfWeights: 0,
+      weights: [],
+      people: [{id: 1}],
+      chartData: [],
+      saveData: false,
       error: ""
     }
+    this.addPerson = this.addPerson.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
+    this.handleAddWeight = this.handleAddWeight.bind(this);
+
   }
 
-  handleSelectChange = (selectedOption) => {
-    this.setState({
-                    selectedOption,
-                    userNameInput: ""
-                  });
-    console.log(`Option selected:`, selectedOption);
-  }
 
   handleDateChange(input) {
     this.setState({
@@ -36,104 +36,99 @@ class NewPerson extends Component {
     });
   }
 
-  changeUserNameInput(input){
-      this.setState({
-        selectedOption: null,
-        userNameInput: input
-      });
-   }
-
-   changeUserWeightInput(input){
-       this.setState({
-         userWeightInput: input
-       });
-    }
-
-    checkForFormErrors(name, weight) {
-      let error = false;
-      if (weight == "") {
-        this.setState({ error: <ul><li>weight cant be blank</li></ul> });
-        error = true;
-      }
-      if (name == "" && this.state.selectedOption == null) {
-        this.setState({ error: <ul><li>name cant be blank</li></ul> });
-        error = true;
-      }
-       return error;
-    }
-
-    getSelectOptions() {
-      let options = [];
-      for(var i=0; i < this.props.peopleData.length; i++) {
-          if (this.props.peopleData[i].id != null) {
-            let option = { id: this.props.peopleData[i].id, label: this.props.peopleData[i].name }
-            options.push(option);
-          }
-      }
-      return options;
-    }
-
-
-  addToWeights(name, weight, date){
+  handleAddWeight = () => {
+    this.setState({ numOfWeights: this.state.weights.length });
+    let weights = this.state.weights;
+    var date = new Date(this.state.startDate);
+    date.setHours(0);
+    date.setMinutes(0);
+    date.setSeconds(0);
+    var ms = date.setMilliseconds(0);
     debugger
-
-      if (this.checkForFormErrors(name, weight) == false) {
-        var currentDate = Math.round(date.getTime() / 1000) * 1000;
-        var d = new Date(currentDate);
-        d.setHours(0);
-        d.setMinutes(0);
-        d.setSeconds(0);
-        var currentDate = d.setMilliseconds(0);
-
-        if (this.state.selectedOption != null) {
-          this.props.saveWeight({ pounds: weight, currentDate: currentDate.toString(), person_id: this.state.selectedOption.id });
-        } else {
-          this.props.savePerson({ name: name, weights_attributes: [{ pounds: weight, currentDate: currentDate.toString() }] });
-       }
-       this.setState({ error: "" });
+    let taken = this.state.weights.filter(function(w){ return w.currentDate === date.toString() });
+    if (taken.length != 0) {
+      this.setState({ error: "selected date is taken"})
+    } else {
+      weights.push({ id: this.state.weights.length + 1,
+                     currentDate: date.toString(),
+                     pounds: '',
+                     ms: ms
+                   })
+      this.setState({ weights: weights,
+                      error: ''
+                    })
     }
-
   }
 
+  handleRemoveWeight = () => {
+    debugger
+    let weights = this.state.weights;
+    weights.pop();
+    this.setState({ weights: weights });
+  }
+
+  addPerson = () => {
+    this.setState({ people: this.state.people.concat([{ id: this.state.people.length + 1 }]) });
+  }
+
+  removePerson = () => {
+    let people = this.state.people;
+    people.pop();
+    this.setState({ people: people });
+  }
+
+  chartPeople = (data) => {
+    debugger
+    let chartData = this.state.chartData;
+    let dataPoints = [];
+    for(let i=0; data.weights.length > i; i++) {
+      let w = { x: data.weights[i].ms,
+                y: parseInt(data.weights[i].pounds) };
+      dataPoints.push(w);
+    }
+    let person = { name: data.name,
+                   type: "line",
+                   xValueType: "dateTime",
+                   toolTipContent: "{x}: {y}lb",
+                   dataPoints: dataPoints }
+    chartData.push(person);
+    this.setState({ chartData: chartData });
+    if (this.state.chartData.length == this.state.people.length) {
+      this.setState({ saveData: false });
+    }
+  }
+
+  saveData = () => {
+   this.setState({ saveData: !this.state.saveData,
+                   chartData: []
+                 });
+ }
 
   render() {
-
-    let options = this.getSelectOptions();
-
-    const { selectedOption } = this.state;
-
+    debugger
     return (
-      <div style={{height: 200 + "px", width: 100 + "%"}}>
-        Enter Name:
-        <input
-         onChange={ (e)=>this.changeUserNameInput(e.target.value) }
-           value={this.state.userNameInput}
-           type="text"
+      <div>
+        {this.state.error}
+        <button type="button" onClick={this.addPerson} className="small">Add Person</button>
+        <button type="button" onClick={this.removePerson} className="small">Remove Person</button>
+        <button type="button" onClick={this.saveData} className="small">Chart Data</button>
+        Enter date:
+        <DatePicker
+          selected={this.state.startDate}
+          onChange={this.handleDateChange}
          />
-         Enter Weight:
-         <input
-          onChange={ (e)=>this.changeUserWeightInput(e.target.value) }
-            value={this.state.userWeightInput}
-            type="text"
-          />
-          <Select
-           value={selectedOption}
-           onChange={this.handleSelectChange}
-           options={options}
-         />
-         Enter date:
-         <DatePicker
-           selected={this.state.startDate}
-           onChange={this.handleDateChange}
-          />
-         <button onClick={ ()=> this.addToWeights(
-                                this.state.userNameInput,
-                                this.state.userWeightInput,
-                                this.state.startDate)
-          }>Submit</button>
-          {this.state.error}
-         <Chart />
 
+        <button type="button" onClick={this.handleAddWeight} className="small">Add Weight</button>
+        <button type="button" onClick={this.handleRemoveWeight} className="small">Remove Weight</button>
+        {this.state.people.map(person=><PersonForm
+                                        key={person.id}
+                                        weights={this.state.weights}
+                                        currentDate={this.state.startDate.toString()}
+                                        chartPeople={this.chartPeople.bind(this)}
+                                        saveData={this.state.saveData}
+                                        />)}
+
+        <Chart people={this.state.chartData} />
       </div>
     )
   }

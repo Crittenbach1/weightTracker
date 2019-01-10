@@ -4,7 +4,7 @@ class Api::V1::WeightsController < Api::V1::BaseController
   end
 
   def create
-    # binding.pry
+
      e = Weight.where(:person_id => params[:person_id], :currentDate => params[:currentDate])
       if !e.empty?
         e.first.pounds = params[:pounds]

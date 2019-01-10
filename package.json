@@ -2,6 +2,7 @@
   "name": "weightTracker",
   "private": true,
   "dependencies": {
+    "jquery": "^3.3.1",
     "react": "^16.5.2",
     "react-datepicker": "^2.0.0",
     "react-dom": "^16.5.2",
