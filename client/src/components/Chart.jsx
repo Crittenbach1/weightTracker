@@ -48,7 +48,7 @@ class Chart extends Component {
       }
 
     return (
-      <div className="chart" style={{height: 200 + "px", width: 100 + "%"}}>
+      <div className="chart" style={{height: 200 + "px", width: 840 + "px"}}>
         {this.state.error}
 
         <CanvasJSChart options={options} />

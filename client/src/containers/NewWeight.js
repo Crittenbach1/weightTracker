@@ -5,14 +5,16 @@ import Error from '../components/Error.js';
 import PersonForm from '../components/PersonForm.js';
 import { savePerson } from '../actions/savePersonAction.js'
 import { saveWeight } from '../actions/saveWeightAction.js'
-import DatePicker from "react-datepicker";
+//import DatePicker from "react-datepicker";
 import Select from 'react-select';
 import $ from "jquery";
 import "react-datepicker/dist/react-datepicker.css";
-
 import Button from '@material-ui/core/Button';
-
 import { createMuiTheme } from '@material-ui/core/styles';
+
+import { MuiPickersUtilsProvider } from 'material-ui-pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import { DatePicker } from 'material-ui-pickers';
 
 class NewPerson extends Component {
   constructor(props) {
@@ -156,17 +158,25 @@ class NewPerson extends Component {
 
           { this.state.error ? <Error message={this.state.error} /> : null }
 
-          <Button variant="contained" color="primary" onClick={this.addPerson}>Add Person</Button>
-          <Button variant="contained" color="primary" onClick={this.removePerson}>Remove Person</Button>
-          <Button variant="contained" color="primary" onClick={this.saveData} >Chart Data</Button>
-          Enter date:
-          <DatePicker
-            selected={this.state.startDate}
-            onChange={this.handleDateChange}
-           />
+          <Button id="button" variant="contained" color="primary" onClick={this.addPerson}>Add Person</Button>
+          <Button id="button" variant="contained" color="primary" onClick={this.removePerson}>Remove Person</Button>
+          <Button id="button" variant="contained" color="primary" onClick={this.saveData} >Chart Data</Button>
 
-          <Button variant="contained" color="primary" onClick={this.handleAddWeight}>Add Weight</Button>
-          <Button variant="contained" color="primary" onClick={this.handleRemoveWeight}>Remove Weight</Button>
+
+          <Button id="button" variant="contained" color="primary" onClick={this.handleAddWeight}>Add Weight</Button>
+          <Button id="button" variant="contained" color="primary" onClick={this.handleRemoveWeight}>Remove Weight</Button>
+
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+             <div className="picker">
+               <DatePicker
+                 label="Select a Date"
+                 value={this.state.startDate}
+                 onChange={this.handleDateChange}
+                 animateYearScrolling
+               />
+             </div>
+           </MuiPickersUtilsProvider>
+
           {this.state.people.map(person=><PersonForm
                                           key={person.id}
                                           id={person.id}
