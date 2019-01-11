@@ -5,10 +5,6 @@ import Error from '../components/Error.js';
 import PersonForm from '../components/PersonForm.js';
 import { savePerson } from '../actions/savePersonAction.js'
 import { saveWeight } from '../actions/saveWeightAction.js'
-//import DatePicker from "react-datepicker";
-import Select from 'react-select';
-import $ from "jquery";
-import "react-datepicker/dist/react-datepicker.css";
 import Button from '@material-ui/core/Button';
 import { createMuiTheme } from '@material-ui/core/styles';
 
@@ -22,7 +18,6 @@ class NewPerson extends Component {
 
     this.state = {
       startDate: new Date(),
-      numOfWeights: 0,
       weights: [],
       people: [{id: 1}],
       chartData: [],
@@ -42,15 +37,12 @@ class NewPerson extends Component {
     });
   }
 
-  handleAddWeight = () => {
-    this.setState({ numOfWeights: this.state.weights.length });
-    let weights = this.state.weights;
-    var date = new Date(this.state.startDate);
+  getDateData = (selectedDate) => {
+    var date = new Date(selectedDate);
     date.setHours(0);
     date.setMinutes(0);
     date.setSeconds(0);
     var ms = date.setMilliseconds(0);
-    debugger
 
     function formatDate(date) {
       var monthNames = [
@@ -68,8 +60,17 @@ class NewPerson extends Component {
     }
 
     let currentDate = formatDate(date);
+
+    return [ms, currentDate];
+
+  }
+
+  handleAddWeight = () => {
+    let weights = this.state.weights;
+    let bothDates = this.getDateData(this.state.startDate)
+
     debugger
-    let taken = this.state.weights.filter(function(w){ return w.currentDate === currentDate });
+    let taken = this.state.weights.filter(function(w){ return w.currentDate === bothDates[1] });
     let peopleEmpty = this.state.people[0];
     if (taken.length != 0) {
       this.setState({ error: "selected date is taken"})
@@ -77,9 +78,9 @@ class NewPerson extends Component {
       this.setState({ error: "must create a person first to add weights"})
     } else {
       weights.push({ id: this.state.weights.length + 1,
-                     currentDate: currentDate,
+                     currentDate: bothDates[1],
                      pounds: '',
-                     ms: ms
+                     ms: bothDates[0]
                    })
       this.setState({ weights: weights,
                       error: false
@@ -187,7 +188,6 @@ class NewPerson extends Component {
                                           />)}
         </div>
         <Chart people={this.state.chartData} />
-
       </div>
     )
   }
