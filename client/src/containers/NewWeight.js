@@ -46,8 +46,11 @@ class NewPerson extends Component {
     var ms = date.setMilliseconds(0);
     debugger
     let taken = this.state.weights.filter(function(w){ return w.currentDate === date.toString() });
+    let peopleEmpty = this.state.people[0];
     if (taken.length != 0) {
       this.setState({ error: "selected date is taken"})
+    } else if (peopleEmpty == null) {
+      this.setState({ error: "must create a person first to add weights"})
     } else {
       weights.push({ id: this.state.weights.length + 1,
                      currentDate: date.toString(),
@@ -79,23 +82,25 @@ class NewPerson extends Component {
 
   chartPeople = (data) => {
     debugger
-    let chartData = this.state.chartData;
-    let dataPoints = [];
-    for(let i=0; data.weights.length > i; i++) {
-      let w = { x: data.weights[i].ms,
-                y: parseInt(data.weights[i].pounds) };
-      dataPoints.push(w);
-    }
-    let person = { name: data.name,
-                   type: "line",
-                   xValueType: "dateTime",
-                   toolTipContent: "{x}: {y}lb",
-                   dataPoints: dataPoints }
-    chartData.push(person);
-    this.setState({ chartData: chartData });
-    if (this.state.chartData.length == this.state.people.length) {
-      this.setState({ saveData: false });
-    }
+
+        let chartData = this.state.chartData;
+        let dataPoints = [];
+        for(let i=0; data.weights.length > i; i++) {
+          let w = { x: data.weights[i].ms,
+                    y: parseInt(data.weights[i].pounds) };
+          dataPoints.push(w);
+        }
+        let person = { name: data.name,
+                       type: "line",
+                       xValueType: "dateTime",
+                       toolTipContent: "{x}: {y}lb",
+                       dataPoints: dataPoints }
+        chartData.push(person);
+        this.setState({ chartData: chartData });
+        if (this.state.chartData.length == this.state.people.length) {
+          this.setState({ saveData: false });
+        }
+
   }
 
   saveData = () => {
@@ -108,27 +113,31 @@ class NewPerson extends Component {
     debugger
     return (
       <div>
-        {this.state.error}
-        <button type="button" onClick={this.addPerson} className="small">Add Person</button>
-        <button type="button" onClick={this.removePerson} className="small">Remove Person</button>
-        <button type="button" onClick={this.saveData} className="small">Chart Data</button>
-        Enter date:
-        <DatePicker
-          selected={this.state.startDate}
-          onChange={this.handleDateChange}
-         />
 
-        <button type="button" onClick={this.handleAddWeight} className="small">Add Weight</button>
-        <button type="button" onClick={this.handleRemoveWeight} className="small">Remove Weight</button>
-        {this.state.people.map(person=><PersonForm
-                                        key={person.id}
-                                        weights={this.state.weights}
-                                        currentDate={this.state.startDate.toString()}
-                                        chartPeople={this.chartPeople.bind(this)}
-                                        saveData={this.state.saveData}
-                                        />)}
+         <div id="people_form">
 
+          {this.state.error}
+          <button type="button" onClick={this.addPerson} className="small">Add Person</button>
+          <button type="button" onClick={this.removePerson} className="small">Remove Person</button>
+          <button type="button" className="waves-effect waves-light btn" onClick={this.saveData} >Chart Data</button>
+          Enter date:
+          <DatePicker
+            selected={this.state.startDate}
+            onChange={this.handleDateChange}
+           />
+
+          <button type="button" onClick={this.handleAddWeight} className="small">Add Weight</button>
+          <button type="button" onClick={this.handleRemoveWeight} className="small">Remove Weight</button>
+          {this.state.people.map(person=><PersonForm
+                                          key={person.id}
+                                          weights={this.state.weights}
+                                          currentDate={this.state.startDate.toString()}
+                                          chartPeople={this.chartPeople.bind(this)}
+                                          saveData={this.state.saveData}
+                                          />)}
+        </div>
         <Chart people={this.state.chartData} />
+
       </div>
     )
   }

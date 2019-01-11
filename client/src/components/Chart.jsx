@@ -31,9 +31,9 @@ class Chart extends Component {
 			animationEnabled: true,
 			exportEnabled: true,
 			theme: "light2", // "light1", "dark1", "dark2"
-			title:{
-				text: "Weight Tracker"
-			},
+		//	title:{
+		//		text: "Weight Tracker"
+		//	},
 			axisY: {
 				title: "Weight",
 				includeZero: false,

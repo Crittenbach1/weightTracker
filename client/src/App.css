@@ -30,3 +30,10 @@
     transform: rotate(360deg);
   }
 }
+
+#people_form {
+  border-radius: 25px;
+  border: 2px solid #c6c6c6;
+  padding: 20px;
+
+}
