@@ -10,7 +10,8 @@ class Chart extends Component {
   componentWillReceiveProps(nextProps) {
     debugger
     if (nextProps.people.length > 0) {
-      this.setState({ data: nextProps.people })
+      let orderedPeople = this.orderPeople(nextProps.people);
+      this.setState({ data: orderedPeople })
     }
   }
 
@@ -20,10 +21,24 @@ class Chart extends Component {
       data: [],
       error: ''
     }
-
   }
 
+  orderPeople(people) {
+      function compare(a,b) {
+         if (a.x < b.x) return -1;
+         if (a.x > b.x) return 1;
+         return 0;
+       }
 
+       for (let i = 0; i < people.length; i++) {
+             let weights = [];
+             for (let j = 0; j < people[i].dataPoints.length; j++) {
+                  weights.push(people[i].dataPoints[j]);
+             }
+             people[i].dataPoints = weights.sort(compare);
+        }
+         return people;
+    }
 
   render() {
      debugger
