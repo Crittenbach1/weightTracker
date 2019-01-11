@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
 import Chart from '../components/Chart.jsx';
+import Error from '../components/Error.js';
 import PersonForm from '../components/PersonForm.js';
 import { savePerson } from '../actions/savePersonAction.js'
 import { saveWeight } from '../actions/saveWeightAction.js'
@@ -21,7 +22,7 @@ class NewPerson extends Component {
       people: [{id: 1}],
       chartData: [],
       saveData: false,
-      error: ""
+      error: false
     }
     this.addPerson = this.addPerson.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
@@ -58,7 +59,7 @@ class NewPerson extends Component {
                      ms: ms
                    })
       this.setState({ weights: weights,
-                      error: ''
+                      error: false
                     })
     }
   }
@@ -82,25 +83,36 @@ class NewPerson extends Component {
 
   chartPeople = (data) => {
     debugger
-
-        let chartData = this.state.chartData;
-        let dataPoints = [];
-        for(let i=0; data.weights.length > i; i++) {
-          let w = { x: data.weights[i].ms,
-                    y: parseInt(data.weights[i].pounds) };
-          dataPoints.push(w);
-        }
-        let person = { name: data.name,
-                       type: "line",
-                       xValueType: "dateTime",
-                       toolTipContent: "{x}: {y}lb",
-                       dataPoints: dataPoints }
-        chartData.push(person);
-        this.setState({ chartData: chartData });
-        if (this.state.chartData.length == this.state.people.length) {
-          this.setState({ saveData: false });
-        }
-
+        let poundsError = data.weights.filter(function(w){ return w.pounds == "" })[0] != null;
+        let weightsError = data.weights[0] == null;
+        let nameError = data.name == "";
+        if (poundsError || nameError || weightsError) {
+          this.setState({ saveData: false,
+                          chartData: [],
+                          error: "name or weights must not be empty"
+                        });
+        } else {
+            let chartData = this.state.chartData;
+            let dataPoints = [];
+            for(let i=0; data.weights.length > i; i++) {
+              let w = { x: data.weights[i].ms,
+                        y: parseInt(data.weights[i].pounds) };
+              dataPoints.push(w);
+            }
+            let person = { name: data.name,
+                           type: "line",
+                           xValueType: "dateTime",
+                           toolTipContent: "{x}: {y}lb",
+                           dataPoints: dataPoints }
+            chartData.push(person);
+            this.setState({ chartData: chartData });
+            if (this.state.chartData.length == this.state.people.length) {
+              this.setState({ saveData: false,
+                              chartData: [],
+                              error: false
+                             });
+            }
+       }
   }
 
   saveData = () => {
@@ -111,12 +123,18 @@ class NewPerson extends Component {
 
   render() {
     debugger
+    let error = null;
+    if (this.state.error != false) {
+      let error = <Error message={this.state.error} />
+    }
+
     return (
       <div>
 
          <div id="people_form">
 
-          {this.state.error}
+          { this.state.error ? <Error message={this.state.error} /> : null }
+
           <button type="button" onClick={this.addPerson} className="small">Add Person</button>
           <button type="button" onClick={this.removePerson} className="small">Remove Person</button>
           <button type="button" className="waves-effect waves-light btn" onClick={this.saveData} >Chart Data</button>
