@@ -33,9 +33,17 @@
 
 #people_form {
   border-radius: 25px;
-  border: 2px solid #c6c6c6;
+  background-color: white;
+  width: 1000px;
   padding: 20px;
+  display: inline-block;
+  text-align: left;
 }
+#newWeight {
+  text-align: center;
+  background-color: #b2eeff;
+}
+
 
 .isa_error {
     color: #D8000C;

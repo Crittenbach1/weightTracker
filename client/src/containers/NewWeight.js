@@ -8,8 +8,11 @@ import { saveWeight } from '../actions/saveWeightAction.js'
 import DatePicker from "react-datepicker";
 import Select from 'react-select';
 import $ from "jquery";
-
 import "react-datepicker/dist/react-datepicker.css";
+
+import Button from '@material-ui/core/Button';
+
+import { createMuiTheme } from '@material-ui/core/styles';
 
 class NewPerson extends Component {
   constructor(props) {
@@ -46,7 +49,25 @@ class NewPerson extends Component {
     date.setSeconds(0);
     var ms = date.setMilliseconds(0);
     debugger
-    let taken = this.state.weights.filter(function(w){ return w.currentDate === date.toString() });
+
+    function formatDate(date) {
+      var monthNames = [
+        "January", "February", "March",
+        "April", "May", "June", "July",
+        "August", "September", "October",
+        "November", "December"
+      ];
+
+      var day = date.getDate();
+      var monthIndex = date.getMonth();
+      var year = date.getFullYear();
+
+      return day + ' ' + monthNames[monthIndex] + ' ' + year;
+    }
+
+    let currentDate = formatDate(date);
+    debugger
+    let taken = this.state.weights.filter(function(w){ return w.currentDate === currentDate });
     let peopleEmpty = this.state.people[0];
     if (taken.length != 0) {
       this.setState({ error: "selected date is taken"})
@@ -54,7 +75,7 @@ class NewPerson extends Component {
       this.setState({ error: "must create a person first to add weights"})
     } else {
       weights.push({ id: this.state.weights.length + 1,
-                     currentDate: date.toString(),
+                     currentDate: currentDate,
                      pounds: '',
                      ms: ms
                    })
@@ -129,25 +150,26 @@ class NewPerson extends Component {
     }
 
     return (
-      <div>
+      <div id="newWeight">
 
          <div id="people_form">
 
           { this.state.error ? <Error message={this.state.error} /> : null }
 
-          <button type="button" onClick={this.addPerson} className="small">Add Person</button>
-          <button type="button" onClick={this.removePerson} className="small">Remove Person</button>
-          <button type="button" className="waves-effect waves-light btn" onClick={this.saveData} >Chart Data</button>
+          <Button variant="contained" color="primary" onClick={this.addPerson}>Add Person</Button>
+          <Button variant="contained" color="primary" onClick={this.removePerson}>Remove Person</Button>
+          <Button variant="contained" color="primary" onClick={this.saveData} >Chart Data</Button>
           Enter date:
           <DatePicker
             selected={this.state.startDate}
             onChange={this.handleDateChange}
            />
 
-          <button type="button" onClick={this.handleAddWeight} className="small">Add Weight</button>
-          <button type="button" onClick={this.handleRemoveWeight} className="small">Remove Weight</button>
+          <Button variant="contained" color="primary" onClick={this.handleAddWeight}>Add Weight</Button>
+          <Button variant="contained" color="primary" onClick={this.handleRemoveWeight}>Remove Weight</Button>
           {this.state.people.map(person=><PersonForm
                                           key={person.id}
+                                          id={person.id}
                                           weights={this.state.weights}
                                           currentDate={this.state.startDate.toString()}
                                           chartPeople={this.chartPeople.bind(this)}

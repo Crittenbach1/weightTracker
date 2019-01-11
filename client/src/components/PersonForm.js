@@ -1,5 +1,32 @@
 import React, { Component } from 'react';
 
+import Input from '@material-ui/core/Input';
+import Button from '@material-ui/core/Button';
+import { createMuiTheme } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import { withStyles } from '@material-ui/core/styles';
+import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
+
+const styles = theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 200,
+  },
+  dense: {
+    marginTop: 19,
+  },
+  menu: {
+    width: 200,
+  },
+});
+
 class PersonForm extends Component {
 
 
@@ -46,26 +73,37 @@ class PersonForm extends Component {
 
   render() {
     debugger
+    const { classes } = this.props;
+
     return (
       <div>
+      <form className={classes.container} noValidate autoComplete="off">
 
-      Enter Name:
-      <input
+       <TextField
        onChange={ (e)=>this.handleNameChange(e.target.value) }
-         value={this.state.name}
-         type="text"
-       />
+          id="standard-name"
+          label="Name"
+          placeholder={`Person #${this.props.id} name`}
+          className={classes.textField}
+          value={this.state.name}
+          margin="normal"
+        />
 
-         <form onSubmit={this.handleSubmit}>
+        </form>
+
+         <form onSubmit={this.handleSubmit} className={classes.container} noValidate autoComplete="off">
             {this.state.weights.map((weight, idx) => (
               <div className="weight">
-                <input
-                  type="text"
-                  placeholder={`Weight #${idx + 1} pounds`}
-                  value={weight.pounds}
-                  onChange={this.handleWeightPoundsChange(idx)}
-                />
-                {weight.currentDate}
+                <TextField
+                onChange={ this.handleWeightPoundsChange(idx) }
+                   id="standard-name"
+                   placeholder={`Weight #${idx + 1} on ${weight.currentDate}`}
+                   className={classes.textField}
+                   value={weight.pounds}
+                   margin="normal"
+                 />
+
+              
               </div>
             ))}
         </form>
@@ -74,4 +112,5 @@ class PersonForm extends Component {
   }
 }
 
-export default PersonForm;
+
+export default withStyles(styles)(PersonForm);

@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import NewWeight from './containers/NewWeight.js';
 import { fetchPeople } from './actions/fetchPeopleAction.js'
+import 'typeface-roboto';
 import './App.css';
 
 
