@@ -3,8 +3,6 @@ import {connect} from "react-redux";
 import Chart from '../components/Chart.jsx';
 import Error from '../components/Error.js';
 import PersonForm from '../components/PersonForm.js';
-import { savePerson } from '../actions/savePersonAction.js'
-import { saveWeight } from '../actions/saveWeightAction.js'
 import Button from '@material-ui/core/Button';
 import { createMuiTheme } from '@material-ui/core/styles';
 
@@ -12,7 +10,7 @@ import { MuiPickersUtilsProvider } from 'material-ui-pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { DatePicker } from 'material-ui-pickers';
 
-class NewPerson extends Component {
+class NewChartData extends Component {
   constructor(props) {
     super(props);
 
@@ -38,7 +36,6 @@ class NewPerson extends Component {
   }
 
   handleAddWeight = () => {
-    debugger
     let weights = this.state.weights;
     let bothDates = this.getDateData(this.state.startDate)
     if (this.errorCheck('ADD_WEIGHT', bothDates) == false) {
@@ -52,6 +49,13 @@ class NewPerson extends Component {
                       error: false
                     })
     }
+  }
+
+  handleRemoveWeight = () => {
+    debugger
+    let weights = this.state.weights;
+    weights.pop();
+    this.setState({ weights: weights });
   }
 
   getDateData = (selectedDate) => {
@@ -78,13 +82,6 @@ class NewPerson extends Component {
 
     let currentDate = formatDate(date);
     return [ms, currentDate];
-  }
-
-  handleRemoveWeight = () => {
-    debugger
-    let weights = this.state.weights;
-    weights.pop();
-    this.setState({ weights: weights });
   }
 
   addPerson = () => {
@@ -136,6 +133,7 @@ class NewPerson extends Component {
               dataPoints.push(w);
             }
             let person = { name: data.name,
+                           showInLegend: true,
                            type: "line",
                            xValueType: "dateTime",
                            toolTipContent: "{x}: {y}lb",
@@ -158,7 +156,7 @@ class NewPerson extends Component {
  }
 
   render() {
-    debugger
+
     let error = null;
     if (this.state.error != false) {
       let error = <Error message={this.state.error} />
@@ -196,8 +194,10 @@ class NewPerson extends Component {
                                           chartPeople={this.chartPeople.bind(this)}
                                           saveData={this.state.saveData}
                                           />)}
+
         </div>
         <Chart people={this.state.chartData} />
+
       </div>
     )
   }
@@ -209,4 +209,4 @@ function mapStateToProps(state) {
    }
 }
 
-export default connect(mapStateToProps, {savePerson, saveWeight})(NewPerson);
+export default connect(mapStateToProps)(NewChartData);

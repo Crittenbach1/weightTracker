@@ -41,6 +41,8 @@
 #newWeight {
   text-align: center;
   background-color: #3a7bf6;
+  height: 554px;
+
 }
 
 .chart {
@@ -55,8 +57,15 @@
 #button {
   margin: 15px;
   background-color: #3a7bf6;
+}
 
+#saveButton {
+  background-color: red;
+}
 
+#saveButtonDiv {
+  height: 37px;
+  background-color: #3a7bf6;
 }
 
 @import url('//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');

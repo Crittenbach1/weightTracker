@@ -10,16 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_05_021402) do
+ActiveRecord::Schema.define(version: 2019_01_11_141501) do
+
+  create_table "charts", force: :cascade do |t|
+  end
 
   create_table "people", force: :cascade do |t|
     t.string "name"
-  end
-
-  create_table "weights", force: :cascade do |t|
-    t.string "pounds"
-    t.string "currentDate"
-    t.integer "person_id"
+    t.string "type"
+    t.string "xValueType"
+    t.string "toolTipContent"
+    t.text "dataPoints"
+    t.boolean "showInLegend"
+    t.integer "chart_id"
   end
 
 end

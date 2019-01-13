@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
+import { saveData } from '../actions/saveDataAction.js'
+import Button from '@material-ui/core/Button';
+import { createMuiTheme } from '@material-ui/core/styles';
 
 var CanvasJSReact = require('../canvasjs.react');
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
+
 
 class Chart extends Component {
 
@@ -21,6 +26,7 @@ class Chart extends Component {
       data: [],
       error: ''
     }
+    this.sendData = this.sendData.bind(this);
   }
 
   orderPeople(people) {
@@ -38,6 +44,10 @@ class Chart extends Component {
              people[i].dataPoints = weights.sort(compare);
         }
          return people;
+    }
+
+    sendData(){
+      this.props.saveData({ persons_attributes: this.state.data });
     }
 
   render() {
@@ -59,6 +69,20 @@ class Chart extends Component {
 				prefix: "",
 				interval: 2
 			},
+      legend: {
+          cursor: "pointer",
+          itemclick: function (e) {
+              //console.log("legend click: " + e.dataPointIndex);
+              //console.log(e);
+              if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                  e.dataSeries.visible = false;
+              } else {
+                  e.dataSeries.visible = true;
+              }
+
+              e.chart.render();
+          }
+      },
 	    	data: this.state.data
       }
 
@@ -67,6 +91,9 @@ class Chart extends Component {
         {this.state.error}
 
         <CanvasJSChart options={options} />
+        <div id="saveButtonDiv">
+           <Button id="saveButton" variant="contained" color="primary" onClick={this.sendData}>Save Data</Button>
+        </div>
       </div>
     );
   }
@@ -81,4 +108,4 @@ function mapStateToProps(state) {
    }
 }
 
-export default connect(mapStateToProps)(Chart);
+export default connect(mapStateToProps, {saveData})(Chart);

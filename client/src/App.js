@@ -5,7 +5,7 @@ import {
   BrowserRouter as Router,
   Route
 } from 'react-router-dom';
-import NewWeight from './containers/NewWeight.js';
+import NewChartData from './containers/NewChartData.js';
 import { fetchPeople } from './actions/fetchPeopleAction.js'
 import 'typeface-roboto';
 import './App.css';
@@ -21,10 +21,14 @@ class App extends Component {
 
     return (
       <div className="App">
-        <NewWeight />
+
+
+        <NewChartData />
+
         <header className="App-header">
 
         </header>
+
       </div>
     );
   }
