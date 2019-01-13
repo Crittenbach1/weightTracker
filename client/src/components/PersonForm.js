@@ -31,6 +31,7 @@ class PersonForm extends Component {
 
 
   componentWillReceiveProps(nextProps) {
+    debugger
     if (nextProps.saveData == true) {
       nextProps.chartPeople({ name: this.state.name, weights: this.state.weights });
     }
@@ -103,7 +104,7 @@ class PersonForm extends Component {
                    margin="normal"
                  />
 
-              
+
               </div>
             ))}
         </form>

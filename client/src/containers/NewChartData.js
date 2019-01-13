@@ -19,6 +19,7 @@ class NewChartData extends Component {
       weights: [],
       people: [{id: 1}],
       chartData: [],
+      savePeopleData: [],
       saveData: false,
       error: false
     }
@@ -125,6 +126,11 @@ class NewChartData extends Component {
   chartPeople = (data) => {
     debugger
         if (this.errorCheck("CHART_PEOPLE", data) == false) {
+
+            let savePeopleData = this.state.savePeopleData;
+            savePeopleData.push(data);
+            this.setState({ savePeopleData: savePeopleData });
+            //////////////////////////////////////
             let chartData = this.state.chartData;
             let dataPoints = [];
             for(let i=0; data.weights.length > i; i++) {
@@ -143,6 +149,7 @@ class NewChartData extends Component {
             if (this.state.chartData.length == this.state.people.length) {
               this.setState({ saveData: false,
                               chartData: [],
+                              savePeopleData: [],
                               error: false
                              });
             }
@@ -151,7 +158,8 @@ class NewChartData extends Component {
 
   saveData = () => {
    this.setState({ saveData: !this.state.saveData,
-                   chartData: []
+                   chartData: [],
+                   savePeopleData: []
                  });
  }
 
@@ -196,7 +204,7 @@ class NewChartData extends Component {
                                           />)}
 
         </div>
-        <Chart people={this.state.chartData} />
+        <Chart people={this.state.chartData} savePeopleData={this.state.savePeopleData} />
 
       </div>
     )

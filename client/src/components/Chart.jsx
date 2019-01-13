@@ -16,7 +16,8 @@ class Chart extends Component {
     debugger
     if (nextProps.people.length > 0) {
       let orderedPeople = this.orderPeople(nextProps.people);
-      this.setState({ data: orderedPeople })
+      this.setState({ data: orderedPeople });
+      this.sendData(nextProps.savePeopleData);
     }
   }
 
@@ -46,8 +47,26 @@ class Chart extends Component {
          return people;
     }
 
-    sendData(){
-      this.props.saveData({ persons_attributes: this.state.data });
+    sendData(data){
+      debugger
+      let people = [];
+
+      for (let i=0; data.length > i; i++) {
+        let person = { name: data[i].name, weights_attributes: [] };
+         let person_weights = [];
+        for (let j=0; data[i].weights.length > j; j++) {
+             let weight = { pounds: data[i].weights[j].pounds,
+                           currentDate: data[i].weights[j].ms.toString() }
+             person_weights.push(weight)
+        }
+        person.weights_attributes = person_weights;
+        people.push(person);
+      }
+      debugger
+
+
+      this.props.saveData({ people_attributes: people });
+
     }
 
   render() {
@@ -91,9 +110,7 @@ class Chart extends Component {
         {this.state.error}
 
         <CanvasJSChart options={options} />
-        <div id="saveButtonDiv">
-           <Button id="saveButton" variant="contained" color="primary" onClick={this.sendData}>Save Data</Button>
-        </div>
+  
       </div>
     );
   }
