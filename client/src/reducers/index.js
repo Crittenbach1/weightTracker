@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-import fetchPeople from './fetchPeopleReducer.js';
+import fetchCharts from './fetchChartsReducer.js';
 
 export default combineReducers({
-   fetchPeople,
+   fetchCharts,
 });

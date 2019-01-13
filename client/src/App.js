@@ -6,7 +6,7 @@ import {
   Route
 } from 'react-router-dom';
 import NewChartData from './containers/NewChartData.js';
-import { fetchPeople } from './actions/fetchPeopleAction.js'
+import { fetchCharts } from './actions/fetchChartsAction.js'
 import 'typeface-roboto';
 import './App.css';
 
@@ -14,7 +14,7 @@ import './App.css';
 class App extends Component {
 
  componentDidMount() {
-   this.props.fetchPeople();
+   this.props.fetchCharts();
  }
 
   render() {
@@ -35,4 +35,4 @@ class App extends Component {
 }
 
 
-export default connect(null, {fetchPeople})(App);
+export default connect(null, {fetchCharts})(App);

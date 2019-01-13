@@ -213,7 +213,7 @@ class NewChartData extends Component {
 
 function mapStateToProps(state) {
    return {
-     peopleData: state.fetchPeople
+     charts: state.fetchCharts
    }
 }
 

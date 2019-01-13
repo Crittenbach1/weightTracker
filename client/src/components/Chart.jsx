@@ -19,13 +19,21 @@ class Chart extends Component {
       this.setState({ data: orderedPeople });
       this.sendData(nextProps.savePeopleData);
     }
+
+    if (nextProps.charts != this.state.savedCharts) {
+      debugger
+      this.setState({ savedCharts: nextProps.charts });
+    }
+
+
   }
 
   constructor(props) {
     super(props);
     this.state = {
       data: [],
-      error: ''
+      error: '',
+      savedCharts: []
     }
     this.sendData = this.sendData.bind(this);
   }
@@ -110,7 +118,7 @@ class Chart extends Component {
         {this.state.error}
 
         <CanvasJSChart options={options} />
-  
+
       </div>
     );
   }
@@ -121,7 +129,7 @@ function mapStateToProps(state) {
   debugger
 
    return {
-     peopleData: state.fetchPeople,
+     charts: state.fetchCharts,
    }
 }
 
