@@ -17,8 +17,10 @@ class Chart extends Component {
     debugger
     if (nextProps.people.length > 0) {
       let orderedPeople = this.orderPeople(nextProps.people);
-      this.setState({ data: orderedPeople });
-      this.sendData(nextProps.savePeopleData);
+      this.setState({ data: orderedPeople,
+                      selectedOption: null
+                    });
+    //  this.sendData(nextProps.savePeopleData);
     }
 
     if (nextProps.charts != this.state.savedCharts) {
@@ -83,24 +85,25 @@ class Chart extends Component {
          return people;
     }
 
-    sendData(data){
+    sendData(){
       debugger
+      let data = this.state.data;
       let people = [];
 
       for (let i=0; data.length > i; i++) {
         let person = { name: data[i].name, weights_attributes: [] };
          let person_weights = [];
-        for (let j=0; data[i].weights.length > j; j++) {
-             let weight = { pounds: data[i].weights[j].pounds,
-                           currentDate: data[i].weights[j].ms.toString() }
+        for (let j=0; data[i].dataPoints.length > j; j++) {
+             let weight = { pounds: data[i].dataPoints[j].y.toString(),
+                            currentDate: data[i].dataPoints[j].x.toString() }
              person_weights.push(weight)
         }
         person.weights_attributes = person_weights;
         people.push(person);
       }
-      debugger
+    //  debugger
 
-      let newDate = new Date();
+      let newDate = new Date().toString();
 
       this.props.saveData({ date: newDate.toString(), people_attributes: people });
 
@@ -151,11 +154,25 @@ class Chart extends Component {
          chart = <CanvasJSChart options={options} />
       }
 
+      let deleteButton = null;
+      if (this.state.selectedOption != null) {
+         deleteButton = <Button id="button" variant="contained" color="primary" onClick={this.getSelectOptions()}>Remove Chart</Button>
+      }
+
+      let saveButton = null;
+      let newDate = new Date();
+      if (this.state.selectedOption == null && this.state.data[0]) {
+         saveButton = <Button id="button" variant="contained" color="primary" onClick={this.sendData}>Save Chart</Button>
+      }
+
+
     return (
       <div className="chart" style={{height: 200 + "px", width: 840 + "px"}}>
         {this.state.error}
 
         {chart}
+        {deleteButton}
+        {saveButton}
 
         <Select
           value={selectedOption}
