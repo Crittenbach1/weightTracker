@@ -107,7 +107,7 @@ class Chart extends Component {
     }
 
   render() {
-     debugger
+    debugger
     const options = {
 			animationEnabled: true,
 			exportEnabled: true,
@@ -146,11 +146,16 @@ class Chart extends Component {
 
       const { selectedOption } = this.state;
 
+      let chart = null;
+      if (this.state.data[0]) {
+         chart = <CanvasJSChart options={options} />
+      }
+
     return (
       <div className="chart" style={{height: 200 + "px", width: 840 + "px"}}>
         {this.state.error}
 
-        <CanvasJSChart options={options} />
+        {chart}
 
         <Select
           value={selectedOption}
