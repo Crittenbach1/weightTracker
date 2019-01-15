@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import { saveData } from '../actions/saveDataAction.js'
 import Button from '@material-ui/core/Button';
 import { createMuiTheme } from '@material-ui/core/styles';
+import Select from 'react-select';
 
 var CanvasJSReact = require('../canvasjs.react');
 var CanvasJS = CanvasJSReact.CanvasJS;
@@ -25,7 +26,6 @@ class Chart extends Component {
       this.setState({ savedCharts: nextProps.charts });
     }
 
-
   }
 
   constructor(props) {
@@ -33,9 +33,29 @@ class Chart extends Component {
     this.state = {
       data: [],
       error: '',
-      savedCharts: []
+      savedCharts: [],
+      selectedOption: null,
     }
     this.sendData = this.sendData.bind(this);
+  }
+
+  handleSelectChange = (selectedOption) => {
+    this.setState({
+                    selectedOption,
+                  });
+    console.log(`Option selected:`, selectedOption);
+  }
+
+  getSelectOptions() {
+    debugger
+    let options = [];
+    for(var i=0; i < this.state.savedCharts.length; i++) {
+        if (this.state.savedCharts[i].id != null) {
+          let option = { id: this.state.savedCharts[i].id, label: this.state.savedCharts[i].date }
+          options.push(option);
+        }
+    }
+    return options;
   }
 
   orderPeople(people) {
@@ -72,8 +92,9 @@ class Chart extends Component {
       }
       debugger
 
+      let newDate = new Date();
 
-      this.props.saveData({ people_attributes: people });
+      this.props.saveData({ date: newDate.toString(), people_attributes: people });
 
     }
 
@@ -113,16 +134,25 @@ class Chart extends Component {
 	    	data: this.state.data
       }
 
+      let chartOptions = this.getSelectOptions();
+
+      const { selectedOption } = this.state;
+
     return (
       <div className="chart" style={{height: 200 + "px", width: 840 + "px"}}>
         {this.state.error}
 
         <CanvasJSChart options={options} />
 
+        <Select
+          value={selectedOption}
+          onChange={this.handleSelectChange}
+          options={chartOptions}
+        />
+
       </div>
     );
   }
-
 }
 
 function mapStateToProps(state) {

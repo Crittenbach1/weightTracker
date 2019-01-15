@@ -4,7 +4,7 @@ export default (state = [], action) => {
       debugger
       let charts = [];
       for (let i=0; action.payload.length > i; i++){
-         let chart = { date: action.payload[0].date, id: action.payload[0].id, people: [] };
+         let chart = { date: action.payload[i].date, id: action.payload[i].id, people: [] };
 
          for (let j=0; action.payload[i].people.length > j; j++){
            let dataPoints = [];
