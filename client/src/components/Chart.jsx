@@ -37,13 +37,21 @@ class Chart extends Component {
       selectedOption: null,
     }
     this.sendData = this.sendData.bind(this);
-  }
+    this.handleSelectChange = this.handleSelectChange.bind(this);
+}
 
   handleSelectChange = (selectedOption) => {
+    let chart;
+    for (let i = 0; this.state.savedCharts.length > i; i++) {
+         if(this.state.savedCharts[i].id == selectedOption.id) {
+           let people = this.state.savedCharts[i].people;
+            chart = this.orderPeople(people);
+         }
+    }
     this.setState({
-                    selectedOption,
+                    selectedOption: selectedOption,
+                    data: chart
                   });
-    console.log(`Option selected:`, selectedOption);
   }
 
   getSelectOptions() {
