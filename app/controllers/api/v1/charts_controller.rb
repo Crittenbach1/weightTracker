@@ -10,7 +10,7 @@ class Api::V1::ChartsController < Api::V1::BaseController
       #binding.pry
       @chart = Chart.create(chart_params)
       respond_to do |format|
-         format.json { render json: @chart, include: "people" }
+         format.json { render json: @chart, include: ["people", "weights"] }
       end
   end
 

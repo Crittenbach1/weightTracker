@@ -36,6 +36,38 @@ export default (state = [], action) => {
          charts.push(chart);
       }
       return charts;
+    case 'ADD_CHART':
+       let chart = { date: action.payload.date, id: action.payload.id, people: [] };
+
+        for (let j=0; action.payload.people.length > j; j++){
+            let dataPoints = [];
+
+              for (let w=0; action.payload.weights.length > w; w++){
+                  if (action.payload.weights[w].person_id == action.payload.people[j].id) {
+                    let weight = { x: parseInt(action.payload.weights[w].currentDate),
+                                   y: parseInt(action.payload.weights[w].pounds) }
+                    dataPoints.push(weight);
+                  }
+              }
+
+              function compare(a,b) {
+                 if (a.x < b.x) return -1;
+                 if (a.x > b.x) return 1;
+                 return 0;
+               }
+
+               dataPoints.sort(compare);
+
+               let person = { name: action.payload.people[j].name,
+                              showInLegend: true,
+                              type: "line",
+                              xValueType: "dateTime",
+                              toolTipContent: "{x}: {y}lb",
+                              dataPoints: dataPoints }
+              chart.people.push(person);
+          }
+
+       return [...state, chart];
     default:
       return state;
   }

@@ -15,7 +15,8 @@ export function saveData(rec) {
     .then(res => {
       return res.json()
     }).then(data => {
-         dispatch({type: 'SAVE_DATA', payload: data})
+         debugger
+         dispatch({type: 'ADD_CHART', payload: data})
     })
   }
 }
