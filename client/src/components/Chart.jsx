@@ -119,10 +119,7 @@ class Chart extends Component {
     const options = {
 			animationEnabled: true,
 			exportEnabled: true,
-			theme: "light2", // "light1", "dark1", "dark2"
-		//	title:{
-		//		text: "Weight Tracker"
-		//	},
+			theme: "light2",
 			axisY: {
 				title: "Weight",
 				includeZero: false,
@@ -136,8 +133,6 @@ class Chart extends Component {
       legend: {
           cursor: "pointer",
           itemclick: function (e) {
-              //console.log("legend click: " + e.dataPointIndex);
-              //console.log(e);
               if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
                   e.dataSeries.visible = false;
               } else {
@@ -172,7 +167,7 @@ class Chart extends Component {
 
 
     return (
-      <div className="chart" style={{height: 200 + "px", width: 840 + "px"}}>
+      <div className="chart" style={{height: "auto", width: 840 + "px"}}>
         {this.state.error}
 
         {chart}

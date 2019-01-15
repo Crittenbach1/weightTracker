@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  background-color: #282c34;
+  min-height: 100vh;
+  margin: 0 auto;
 }
 
 .App-logo {
@@ -9,7 +12,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  height: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,16 +41,20 @@
   display: inline-block;
   text-align: left;
 }
+
 #newWeight {
   text-align: center;
   background-color: #3a7bf6;
-  height: 554px;
-
+  min-height: 400px;
+  height: auto;
 }
 
 .chart {
   display: inline-block;
+  padding-bottom: 100px;
 }
+
+
 
 .isa_error {
     color: #D8000C;

@@ -21,14 +21,7 @@ class App extends Component {
 
     return (
       <div className="App">
-
-
-        <NewChartData />
-
-        <header className="App-header">
-
-        </header>
-
+         <NewChartData className="newChartData" />
       </div>
     );
   }
