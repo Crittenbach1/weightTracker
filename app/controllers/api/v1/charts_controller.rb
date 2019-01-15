@@ -14,6 +14,10 @@ class Api::V1::ChartsController < Api::V1::BaseController
       end
   end
 
+  def destroy
+    Chart.find(params[:id]).destroy
+  end
+
   private
 
   def chart_params

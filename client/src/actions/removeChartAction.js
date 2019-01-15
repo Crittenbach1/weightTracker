@@ -3,9 +3,9 @@ import fetch from 'isomorphic-fetch';
 export function removeChart(rec) {
   debugger
   return function(dispatch){
-    return fetch(`/api/v1/charts/${id}`, {
+    return fetch(`/api/v1/charts/${rec}`, {
       credentials: "include",
-      method: "POST",
+      method: 'DELETE',
       headers: {
         'Accept': "application/json",
         'Content-Type': "application/json",
@@ -13,10 +13,10 @@ export function removeChart(rec) {
       body: JSON.stringify(rec)
     })
     .then(res => {
-      return res.json()
+      return res
     }).then(data => {
          debugger
-         dispatch({type: 'ADD_CHART', payload: data})
+         dispatch({type: 'REMOVE_CHART', payload: rec})
     })
   }
 }

@@ -68,6 +68,16 @@ export default (state = [], action) => {
           }
 
        return [...state, chart];
+       case 'REMOVE_CHART':
+          debugger
+          let charts2 = [];
+          for(let i=0; state.length > i; i++) {
+             if (state[i].id != action.payload) {
+               charts2.push(state[i]) ;
+             }
+           }
+           debugger
+          return charts2;
     default:
       return state;
   }

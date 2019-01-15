@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
-import { saveData } from '../actions/saveDataAction.js'
+import { removeChart } from '../actions/removeChartAction.js';
+import { saveData } from '../actions/saveDataAction.js';
 import Button from '@material-ui/core/Button';
 import { createMuiTheme } from '@material-ui/core/styles';
 import Select from 'react-select';
@@ -14,17 +15,14 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 class Chart extends Component {
 
   componentWillReceiveProps(nextProps) {
-    debugger
     if (nextProps.people.length > 0) {
       let orderedPeople = this.orderPeople(nextProps.people);
       this.setState({ data: orderedPeople,
                       selectedOption: null
                     });
-    //  this.sendData(nextProps.savePeopleData);
     }
 
     if (nextProps.charts != this.state.savedCharts) {
-      debugger
       this.setState({ savedCharts: nextProps.charts });
     }
 
@@ -39,6 +37,7 @@ class Chart extends Component {
       selectedOption: null,
     }
     this.sendData = this.sendData.bind(this);
+    this.removeChart = this.removeChart.bind(this);
     this.handleSelectChange = this.handleSelectChange.bind(this);
 }
 
@@ -86,7 +85,6 @@ class Chart extends Component {
     }
 
     sendData(){
-      debugger
       let data = this.state.data;
       let people = [];
 
@@ -101,13 +99,20 @@ class Chart extends Component {
         person.weights_attributes = person_weights;
         people.push(person);
       }
-    //  debugger
 
       let newDate = new Date().toString();
-
       this.props.saveData({ date: newDate.toString(), people_attributes: people });
-
     }
+
+    removeChart() {
+      debugger
+      this.setState({ selectedOption: null,
+                      data: []
+                    } )
+      this.props.removeChart(this.state.selectedOption.id);
+    }
+
+
 
   render() {
     debugger
@@ -156,7 +161,7 @@ class Chart extends Component {
 
       let deleteButton = null;
       if (this.state.selectedOption != null) {
-         deleteButton = <Button id="button" variant="contained" color="primary" onClick={this.getSelectOptions()}>Remove Chart</Button>
+         deleteButton = <Button id="button" variant="contained" color="primary" onClick={this.removeChart}>Remove Chart</Button>
       }
 
       let saveButton = null;
@@ -193,4 +198,4 @@ function mapStateToProps(state) {
    }
 }
 
-export default connect(mapStateToProps, {saveData})(Chart);
+export default connect(mapStateToProps, {saveData, removeChart})(Chart);
