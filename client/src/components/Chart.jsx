@@ -156,13 +156,13 @@ class Chart extends Component {
 
       let deleteButton = null;
       if (this.state.selectedOption != null) {
-         deleteButton = <Button id="button" variant="contained" color="primary" onClick={this.removeChart}>Remove Chart</Button>
+         deleteButton = <Button id="saveDeleteButton" variant="contained" color="primary" onClick={this.removeChart}>Remove Chart</Button>
       }
 
       let saveButton = null;
       let newDate = new Date();
       if (this.state.selectedOption == null && this.state.data[0]) {
-         saveButton = <Button id="button" variant="contained" color="primary" onClick={this.sendData}>Save Chart</Button>
+         saveButton = <Button id="saveDeleteButton" variant="contained" color="primary" onClick={this.sendData}>Save Chart</Button>
       }
 
 

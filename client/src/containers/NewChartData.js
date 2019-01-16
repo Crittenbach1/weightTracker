@@ -4,7 +4,6 @@ import Chart from '../components/Chart.jsx';
 import Error from '../components/Error.js';
 import PersonForm from '../components/PersonForm.js';
 import Button from '@material-ui/core/Button';
-import { createMuiTheme } from '@material-ui/core/styles';
 
 import { MuiPickersUtilsProvider } from 'material-ui-pickers';
 import DateFnsUtils from '@date-io/date-fns';
@@ -176,9 +175,8 @@ class NewChartData extends Component {
          <div id="people_form">
 
           { this.state.error ? <Error message={this.state.error} /> : null }
-
-          <Button id="button" variant="contained" color="primary" onClick={this.addPerson}>Add Person</Button>
           <Button id="button" variant="contained" color="primary" onClick={this.removePerson}>Remove Person</Button>
+          <Button id="button" variant="contained" color="primary" onClick={this.addPerson}>Add Person</Button>
           <Button id="button" variant="contained" color="primary" onClick={this.saveData} >Chart Data</Button>
           <Button id="button" variant="contained" color="primary" onClick={this.handleAddWeight}>Add Weight</Button>
           <Button id="button" variant="contained" color="primary" onClick={this.handleRemoveWeight}>Remove Weight</Button>

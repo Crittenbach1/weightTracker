@@ -7,9 +7,23 @@ import {
 } from 'react-router-dom';
 import NewChartData from './containers/NewChartData.js';
 import { fetchCharts } from './actions/fetchChartsAction.js'
+import { withStyles } from '@material-ui/core/styles';
+
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+import purple from '@material-ui/core/colors/purple';
+import green from '@material-ui/core/colors/green';
+import blue from '@material-ui/core/colors/blue';
+
 import 'typeface-roboto';
 import './App.css';
 
+const theme = createMuiTheme({
+  palette: {
+    primary: blue,
+    secondary: green,
+  },
+});
 
 class App extends Component {
 
@@ -20,9 +34,11 @@ class App extends Component {
   render() {
 
     return (
+      <MuiThemeProvider theme={theme}>
       <div className="App">
          <NewChartData className="newChartData" />
       </div>
+      </MuiThemeProvider>
     );
   }
 }
