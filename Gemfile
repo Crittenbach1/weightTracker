@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.4.2'
 
 gem 'foreman', '~> 0.82.0'
-
+gem 'active_model_serializers', '~>0.9.4'
 gem 'pry'
 gem 'responders'
 gem 'react-rails'
