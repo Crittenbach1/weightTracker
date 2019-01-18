@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_13_093910) do
+ActiveRecord::Schema.define(version: 2019_01_18_121354) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "charts", force: :cascade do |t|
     t.string "date"

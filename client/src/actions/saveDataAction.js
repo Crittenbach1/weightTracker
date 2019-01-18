@@ -3,8 +3,8 @@ import fetch from 'isomorphic-fetch';
 export function saveData(rec) {
   debugger
   return function(dispatch){
-    return fetch(`/api/v1/charts`, {
-      credentials: "include",
+    var url = 'http://localhost:3001/api/v1/charts';
+    return fetch(url, {
       method: "POST",
       headers: {
         'Accept': "application/json",

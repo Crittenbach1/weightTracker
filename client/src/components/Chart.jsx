@@ -101,6 +101,7 @@ class Chart extends Component {
       }
 
       let newDate = new Date().toString();
+      debugger
       this.props.saveData({ date: newDate.toString(), people_attributes: people });
     }
 

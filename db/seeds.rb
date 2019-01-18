@@ -4,6 +4,4 @@
 # Examples:
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-
-    weight = Weight.create({ pounds: "150", currentDate: "1547013351000", person_id: 1 })
-    weight = Weight.create({ pounds: "100", currentDate: "1547013351000", person_id: 1 })
+#   Character.create(name: 'Luke', movie: movies.first)

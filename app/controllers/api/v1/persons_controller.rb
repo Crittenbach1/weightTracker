@@ -1,21 +1,21 @@
-class Api::V1::PersonsController < Api::V1::BaseController
-  def index
-    @persons = Person.all
-    respond_to do |format|
-       format.json { render json: @persons, include: "weights" }
-     end
-  end
+module Api::V1
+  class PersonsController < ApplicationController
 
-  def create
-      @person = Person.create(person_params)
-      respond_to do |format|
-         format.json { render json: @person, include: "weights" }
-      end
-  end
+    def index
+      @persons = Person.all
+      render json: @persons, include: "weights"
+    end
 
-  private
+    def create
+        binding.pry
+        @person = Person.create(person_params)
+        render json: @person, include: "weights"
+    end
 
-  def person_params
-    params.require(:person).permit(:id, :name, weights_attributes: [:pounds, :currentDate])
+    private
+
+    def person_params
+      params.require(:person).permit(:id, :name, weights_attributes: [:pounds, :currentDate])
+    end
   end
 end
