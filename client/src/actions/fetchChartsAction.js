@@ -4,7 +4,7 @@ export function fetchCharts() {
     debugger
   return function(dispatch){
     dispatch({type: 'LOADING'})
-    var url = 'http://localhost:3001/api/v1/charts.json';
+    var url = 'https://localhost:3001/api/v1/charts.json';
     var req = new Request(url);
     return fetch(req)
     .then(function(response) {

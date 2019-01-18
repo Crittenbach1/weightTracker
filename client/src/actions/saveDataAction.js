@@ -3,7 +3,7 @@ import fetch from 'isomorphic-fetch';
 export function saveData(rec) {
   debugger
   return function(dispatch){
-    var url = 'http://localhost:3001/api/v1/charts';
+    var url = 'https://localhost:3001/api/v1/charts';
     return fetch(url, {
       method: "POST",
       headers: {
